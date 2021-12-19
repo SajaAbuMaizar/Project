@@ -1,9 +1,12 @@
 #include "ToolBar.h"
 #include <iostream>
+#include <thread>
 
 const int WIDTH = 500;
 const int HEIGHT = 500;
 const int BUTTONS = 3;
+
+
 
 ToolBar::ToolBar()
 {
@@ -34,7 +37,56 @@ void ToolBar::initializeImage()
 	}
 }
 
-std::vector <sf::Sprite> ToolBar::getToolButtons()
+std::vector <sf::Sprite> ToolBar::getToolButtons() const
 {
 	return m_toolButtons;
+}
+
+void ToolBar::ShowHelp()
+{
+	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	createHelp();
+	sf::RenderWindow helpWindow(sf::VideoMode(WIDTH, HEIGHT), "Help");
+    while (helpWindow.isOpen())
+    {
+		helpWindow.clear();
+		helpWindow.draw(m_helpText);
+		helpWindow.display();
+        if (auto event = sf::Event{}; helpWindow.waitEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed: //if the user closes the window then close the window and exit
+				helpWindow.close();
+                break;
+            }
+        }
+    }
+}
+
+void ToolBar::createHelp()
+{
+	m_helpText = sf::Text("Please enter the size of the window in the Terminal...\n", font);
+	m_helpText.setCharacterSize(20);
+}
+
+void ToolBar::handleToolsClick(const sf::Vector2f& location)
+{
+	for (int index = 0; index < BUTTONS; index++)
+	{
+		if (m_toolButtons[index].getGlobalBounds().contains(location))
+		{
+			switch (index)
+			{
+			case 0://if the user pressed the start button
+				break;
+			case 1://if the user pressed the help button
+				ShowHelp();
+				break;
+			case 2: //if the user pressed the exit button
+				exit(0);
+				break;
+			}
+		}
+	}
 }

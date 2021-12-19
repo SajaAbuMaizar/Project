@@ -9,6 +9,7 @@ public:
 
 private:
 	sf::RenderWindow m_window;
+	ToolBar m_tool;
 	int m_width;
 	int m_height;
 };
