@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "ToolBar.h"
 
 class Controller {
 public:

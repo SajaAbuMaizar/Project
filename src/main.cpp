@@ -1,14 +1,14 @@
 #include <iostream>
-//#include "Controller.h"
+#include "Controller.h"
 
-//#include <thread>
+const int WIDTH = 500;
+const int HEIGHT = 500;
 
 
-//const int WIDTH = 500;
-//const int HEIGHT = 500;
-
-int main ()
+int main()
 {
-
-    std::cout << "here\n";
+	Controller gameControl(WIDTH,HEIGHT);
+	gameControl.operateGame();
+	
+	return 0;
 }
