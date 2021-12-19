@@ -1,0 +1,13 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+
+class Controller {
+public:
+	Controller(int width, int height);
+	void operateGame();
+
+private:
+	sf::RenderWindow m_window;
+	int m_width;
+	int m_height;
+};
