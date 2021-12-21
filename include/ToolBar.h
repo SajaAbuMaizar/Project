@@ -10,7 +10,7 @@ public:
 	ToolBar();
 	std::vector <sf::Sprite> getToolButtons() const;
 	void initializeImage();
-	void handleToolsClick(const sf::Vector2f& location);
+	bool handleToolsClick(const sf::Vector2f& location);
 	void ShowHelp();
 	void createHelp();
 

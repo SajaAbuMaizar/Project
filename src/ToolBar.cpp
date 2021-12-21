@@ -6,8 +6,6 @@ const int WIDTH = 500;
 const int HEIGHT = 500;
 const int BUTTONS = 3;
 
-
-
 ToolBar::ToolBar()
 {
 	m_startGame.loadFromFile("Start.png");
@@ -70,7 +68,7 @@ void ToolBar::createHelp()
 	m_helpText.setCharacterSize(20);
 }
 
-void ToolBar::handleToolsClick(const sf::Vector2f& location)
+bool ToolBar::handleToolsClick(const sf::Vector2f& location)
 {
 	for (int index = 0; index < BUTTONS; index++)
 	{
@@ -79,6 +77,7 @@ void ToolBar::handleToolsClick(const sf::Vector2f& location)
 			switch (index)
 			{
 			case 0://if the user pressed the start button
+				return true;
 				break;
 			case 1://if the user pressed the help button
 				ShowHelp();
@@ -89,4 +88,5 @@ void ToolBar::handleToolsClick(const sf::Vector2f& location)
 			}
 		}
 	}
+	return false;
 }

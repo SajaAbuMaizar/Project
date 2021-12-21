@@ -1,5 +1,7 @@
 #include "Controller.h"
+#include "Level.h"
 #include <iostream>
+#include <fstream>
 
 const int BUTTONS = 3;
 
@@ -33,7 +35,12 @@ void Controller::operateGame()
                 switch (event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left: //if the button that is pressed is the left button
-                    m_tool.handleToolsClick(location); //create bool to know if the start button is pressed
+                    if (m_tool.handleToolsClick(location))//if the start button is pressed then enter the loop
+                    {
+                        Level l;
+                        l.levelOperator();
+                        //do the start button
+                    }
                     break;
                 }
                 break;
@@ -42,3 +49,4 @@ void Controller::operateGame()
         }
     }
 }
+
