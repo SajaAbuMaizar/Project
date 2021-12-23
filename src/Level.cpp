@@ -5,9 +5,9 @@ const int NUM_OF_LEVELS = 1;
 
 Level::Level() :
     m_level(1),
-    m_timer(0)
+    m_timer(0),
+    m_levelSize(0,0)
 {
-
 }
 
 void Level::buildLevel()
@@ -33,8 +33,10 @@ void Level::buildLevel()
     {
 
     }
-
+    calculateLevelSize(board_file);
+    std::cout << m_levelSize.x << " " << m_levelSize.y << std::endl;
     startLevel();
+
 }
 
 void Level::startLevel()
@@ -78,5 +80,29 @@ void Level::levelOperator()
     {
         m_fileName = createFileName();
         buildLevel(); //why to make file name private? when lose/time is up
+    }
+}
+
+void Level::calculateLevelSize(std::ifstream& board_file)
+{
+    while (!board_file.eof())
+    {
+        std::string line;
+        getline(board_file, line);
+        m_levelSize.x = ((line.size() > m_levelSize.x) ? unsigned int(line.size()) : m_levelSize.x);
+        m_levelSize.y++;
+    }
+}
+
+void Level::readLevel(std::ifstream& board_file)
+{
+    std::string line;
+    board_file.seekg(0); //erturn to the beginning of the file
+    getline(board_file, line);
+    getline(board_file, line);
+    //start reading the level
+    while (!board_file.eof())
+    {
+
     }
 }
