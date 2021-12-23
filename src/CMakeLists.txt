@@ -2,4 +2,5 @@
                                                "Controller.cpp"
                                                 "ToolBar.cpp"
                                                 "Level.cpp"
-                                                "TimeLimitedLevel.cpp")
+                                                "TimeLimitedLevel.cpp"
+                                                "Board.cpp")

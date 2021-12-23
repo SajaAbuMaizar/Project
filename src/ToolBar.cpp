@@ -2,12 +2,14 @@
 #include <iostream>
 #include <thread>
 
-const int WIDTH = 500;
-const int HEIGHT = 500;
+const int WIDTH = 1000;
+const int HEIGHT = 600;
 const int BUTTONS = 3;
 
 ToolBar::ToolBar()
 {
+
+
 	m_startGame.loadFromFile("Start.png");
 	auto startImg = sf::Sprite(m_startGame);
 	m_toolButtons.push_back(startImg);

@@ -4,7 +4,7 @@
 class StaticObject : public GameObject
 {
 public:
-	//using GameObject();
+	using GameObject::GameObject;
 
 private:
 

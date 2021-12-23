@@ -1,5 +1,5 @@
 #include "Level.h"
-
+#include "Board.h"
 
 const int NUM_OF_LEVELS = 1;
 
@@ -21,7 +21,7 @@ void Level::buildLevel()
     }
     std::string time_str;
     getline(board_file, time_str);
-    if (time_str == "T")
+    if (time_str == "T") //time limited level
     {
         getline(board_file, time_str);
         std::stringstream geek(time_str);
@@ -31,43 +31,17 @@ void Level::buildLevel()
     }
     else
     {
-
+        getline(board_file, time_str); //ignore a line
     }
     calculateLevelSize(board_file);
-    std::cout << m_levelSize.x << " " << m_levelSize.y << std::endl;
-    startLevel();
-
+    std::cout << m_levelSize.x << " " << m_levelSize.y << std::endl;//
+    Board b(m_levelSize);
+    b.readLevel(board_file);
+    std::cout << "here\n";
+    b.startLevel();
 }
 
-void Level::startLevel()
-{
-    sf::RenderWindow window(sf::VideoMode(500, 500), "Save The King Level " + std::to_string(m_level));
-    font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-    while (window.isOpen())
-    {
-        window.clear();
-        m_clock.getElapsedTime();
-        sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
-        m_helpText.setCharacterSize(20);
-        float time2 = m_timer - m_clock.getElapsedTime().asSeconds();
-        sf::Text m_time = sf::Text(sf::String(std::to_string(time2)), font1);
-        m_time.setCharacterSize(20);
-        sf::Vector2f pos(17.0f,17.0f);
-        m_time.setPosition(pos);
-        window.draw(m_helpText);
-        window.draw(m_time);
-        window.display();
-        if (auto event = sf::Event{}; window.pollEvent(event))
-        {
-            switch (event.type)
-            {
-            case sf::Event::Closed: //if the user closes the window then close the window and exit
-                window.close();
-                break;
-            }
-        }
-    }
-}
+
 
 std::string Level::createFileName()
 {
@@ -94,15 +68,3 @@ void Level::calculateLevelSize(std::ifstream& board_file)
     }
 }
 
-void Level::readLevel(std::ifstream& board_file)
-{
-    std::string line;
-    board_file.seekg(0); //erturn to the beginning of the file
-    getline(board_file, line);
-    getline(board_file, line);
-    //start reading the level
-    while (!board_file.eof())
-    {
-
-    }
-}

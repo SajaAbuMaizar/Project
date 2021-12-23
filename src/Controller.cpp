@@ -14,9 +14,13 @@ Controller::Controller(int width, int height)
 
 void Controller::operateGame()
 {
+    sf::Texture background;
+    background.loadFromFile("Marvel.jpg");
+    auto backgroundImg = sf::Sprite(background);
     while (m_window.isOpen())
     {
         m_window.clear();
+        //m_window.draw(backgroundImg);
         for (int counter = 0; counter < BUTTONS; counter++)
         {
             m_window.draw(m_tool.getToolButtons()[counter]);
