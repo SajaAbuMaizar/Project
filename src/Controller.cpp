@@ -9,8 +9,7 @@ Controller::Controller(int width, int height)
     : m_width(width),
     m_height(height),
     m_window(sf::VideoMode(width, height), "Save The King")
-{
-}
+{}
 
 void Controller::operateGame()
 {
@@ -41,9 +40,11 @@ void Controller::operateGame()
                 case sf::Mouse::Button::Left: //if the button that is pressed is the left button
                     if (m_tool.handleToolsClick(location))//if the start button is pressed then enter the loop
                     {
+                        //close the toolbar window
+                        m_window.close();
+                        //do the start button
                         Level l;
                         l.levelOperator();
-                        //do the start button
                     }
                     break;
                 }

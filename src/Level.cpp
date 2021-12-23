@@ -4,24 +4,25 @@
 const int NUM_OF_LEVELS = 1;
 
 Level::Level() :
-    m_level(1),
+    m_level(1), //change "1" to the number of the current level. the c-tor should probubly receive it as sa param.
     m_timer(0),
     m_levelSize(0,0)
-{
-}
+{}
 
 void Level::buildLevel()
 {
     std::ifstream board_file;
-    board_file.open("C:\\Users\\sajaabu\\source\\repos\\Project\\src\\1.txt"); //m_fileName
-    if (!board_file) //if the file didn't succeed in opening
+    //board_file.open("C:\\Users\\Samah\\source\\repos\\Project\\src\\1.txt"); //m_fileName
+    createFileName();
+    board_file.open(m_fileName);
+    if (!board_file) //if opening the file faild. . .
     {
         std::cerr << "Error: File could NOT be opened !!!";
         exit(1);
     }
     std::string time_str;
     getline(board_file, time_str);
-    if (time_str == "T") //time limited level
+    if (time_str == "T") // T = time limited level, F = not time limited
     {
         getline(board_file, time_str);
         std::stringstream geek(time_str);
@@ -45,7 +46,7 @@ void Level::buildLevel()
 
 std::string Level::createFileName()
 {
-    return ("C:\\" + std::to_string(m_level) + ".txt");
+    return (std::to_string(m_level) + ".txt");
 }
 
 void Level::levelOperator()

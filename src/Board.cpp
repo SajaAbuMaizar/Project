@@ -4,8 +4,8 @@
 void Board::readLevel(std::ifstream& board_file)
 {
     std::string line;
-    board_file.seekg(0); //erturn to the beginning of the file
-    getline(board_file, line);
+    board_file.seekg(0); //go back to the beginning of the file
+    getline(board_file, line);  //ignor two lines of the file (the sketch of the board starts from the 3rd line)
     getline(board_file, line);
     //start reading the level
     char c;
@@ -26,9 +26,11 @@ void Board::readChar(const char c, const size_t i, const size_t j)
 {
     std::cout << c << " " << i << " " << j << std::endl;
 
+    // m_board[m_levelSize.x][m_levelSize.y]
     m_board.resize(m_levelSize.x);
-    for (int i = 0; i < m_levelSize.x; i++)
-        m_board[i].resize(m_levelSize.y);
+
+    for (unsigned int index = 0; index < m_levelSize.x; index++)
+        m_board[index].resize(m_levelSize.y);
     
     switch (c)
     {
@@ -68,7 +70,9 @@ void Board::startLevel()
         {
             for (unsigned int j = 0; j < m_levelSize.y; j++)
             {
-                //window.draw(m_board[i][j]->draw()); //this is the problematic line
+                //ignore nullptr elements and print other elements to the window
+                if (m_board[i][j] != nullptr)
+                    window.draw(m_board[i][j]->draw());
             }
         }
         /*
