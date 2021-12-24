@@ -15,9 +15,7 @@ class Level
 public:
 	Level();
 	void buildLevel();
-	std::string createFileName();
 	void levelOperator();
-	void calculateLevelSize(std::ifstream& board_file);
 
 private:
 	int m_level;
@@ -25,4 +23,7 @@ private:
 	float m_timer;
 	std::string m_fileName;
 	sf::Vector2u m_levelSize;
+	// Helper Funvtions:
+	std::string createFileName();
+	void calculateLevelSize(std::ifstream& board_file);
 };

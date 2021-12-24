@@ -15,7 +15,6 @@ class Board
 public:
 	Board(sf::Vector2u levelSize) : m_levelSize(levelSize) {};
 	void readLevel(std::ifstream& board_file);
-	void readChar(const char c, const size_t i, const size_t j);
 	void startLevel();
 	//std::vector<std::vector<GameObject>> getBoard();
 
@@ -23,5 +22,7 @@ public:
 private:
 	std::vector<std::vector<std::unique_ptr<GameObject>>> m_board;
 	sf::Vector2u m_levelSize;
+	// Helper Functions:
+	void readChar(const char c, const size_t i, const size_t j);
 
 };
