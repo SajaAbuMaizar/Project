@@ -13,9 +13,11 @@ Controller::Controller(int width, int height)
 
 void Controller::operateGame()
 {
+    //set background
     sf::Texture background;
-    background.loadFromFile("Marvel.jpg");
+    background.loadFromFile("Background.png");
     auto backgroundImg = sf::Sprite(background);
+
     while (m_window.isOpen())
     {
         m_window.clear();

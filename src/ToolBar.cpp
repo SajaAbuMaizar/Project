@@ -6,10 +6,11 @@ const int WIDTH = 1000;
 const int HEIGHT = 600;
 const int BUTTONS = 3;
 
+enum Buttons{start, help, exitGame};
+
 ToolBar::ToolBar()
 {
 
-	//	m_startGame.loadFromFile("Start.png");
 	m_startGame.loadFromFile("Start Button.png");
 	auto startImg = sf::Sprite(m_startGame);
 	m_toolButtons.push_back(startImg);
@@ -41,33 +42,11 @@ std::vector <sf::Sprite> ToolBar::getToolButtons() const
 {
 	return m_toolButtons;
 }
-
+//	the function builds a Help object 
 void ToolBar::ShowHelp()
 {
-	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-	createHelp();
-	sf::RenderWindow helpWindow(sf::VideoMode(WIDTH, HEIGHT), "Help");
-    while (helpWindow.isOpen())
-    {
-		helpWindow.clear();
-		helpWindow.draw(m_helpText);
-		helpWindow.display();
-        if (auto event = sf::Event{}; helpWindow.waitEvent(event))
-        {
-            switch (event.type)
-            {
-            case sf::Event::Closed: //if the user closes the window then close the window and exit
-				helpWindow.close();
-                break;
-            }
-        }
-    }
-}
-
-void ToolBar::createHelp()
-{
-	m_helpText = sf::Text("Please enter the size of the window in the Terminal...\n", font);
-	m_helpText.setCharacterSize(20);
+	Help help(WIDTH, HEIGHT);
+	help.showHelp();
 }
 
 bool ToolBar::handleToolsClick(const sf::Vector2f& location)
@@ -78,13 +57,13 @@ bool ToolBar::handleToolsClick(const sf::Vector2f& location)
 		{
 			switch (index)
 			{
-			case 0://if the user pressed the start button
+			case start://if the user pressed the start button
 				return true;
 				break;
-			case 1://if the user pressed the help button
+			case help://if the user pressed the help button
 				ShowHelp();
 				break;
-			case 2: //if the user pressed the exit button
+			case exitGame: //if the user pressed the exit button
 				exit(0);
 				break;
 			}

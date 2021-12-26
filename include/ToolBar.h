@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include"Help.h"
 
 inline auto font = sf::Font();
 
@@ -12,7 +13,6 @@ public:
 	void initializeImage();
 	bool handleToolsClick(const sf::Vector2f& location);
 	void ShowHelp();
-	void createHelp();
 
 private:
 	std::vector <sf::Sprite> m_toolButtons;
