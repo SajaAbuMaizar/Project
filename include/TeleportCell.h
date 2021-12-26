@@ -6,9 +6,11 @@ class TeleportCell : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	virtual sf::Sprite draw() {
+	virtual sf::Sprite getImage() {
 		m_TeleportCell.loadFromFile("TeleportCell.jpg");
-		return sf::Sprite(m_TeleportCell);
+		auto TeleportCellImg = sf::Sprite(m_TeleportCell);
+		TeleportCellImg.scale(0.1f, 0.1f);
+		return TeleportCellImg;
 	};
 
 private:

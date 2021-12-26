@@ -2,7 +2,7 @@
 #include "Controller.h"
 
 
-const int WIDTH = 1000;
+const int WIDTH = 1000; //to send the parameters
 const int HEIGHT = 600;
 
 

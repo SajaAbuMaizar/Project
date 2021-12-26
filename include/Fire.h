@@ -6,9 +6,11 @@ class Fire : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	virtual sf::Sprite draw() {
+	virtual sf::Sprite getImage() {
 		m_Fire.loadFromFile("Fire.png");
-		return sf::Sprite(m_Fire);
+		auto FireImg = sf::Sprite(m_Fire);
+		FireImg.scale(0.1f, 0.1f);
+		return FireImg;
 	};
 
 private:

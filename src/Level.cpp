@@ -12,7 +12,6 @@ Level::Level() :
 void Level::buildLevel()
 {
     std::ifstream board_file;
-    //board_file.open("C:\\Users\\Samah\\source\\repos\\Project\\src\\1.txt"); //m_fileName
     createFileName();
     board_file.open(m_fileName);
     if (!board_file) //if opening the file faild. . .
@@ -64,8 +63,8 @@ void Level::calculateLevelSize(std::ifstream& board_file)
     {
         std::string line;
         getline(board_file, line);
-        m_levelSize.x = ((line.size() > m_levelSize.x) ? unsigned int(line.size()) : m_levelSize.x);
         m_levelSize.y++;
+        m_levelSize.x = ((line.size() > m_levelSize.x) ? unsigned int(line.size()) : m_levelSize.x);
     }
 }
 

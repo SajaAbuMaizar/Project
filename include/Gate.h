@@ -6,9 +6,11 @@ class Gate : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	virtual sf::Sprite draw() {
+	virtual sf::Sprite getImage() {
 		m_Gate.loadFromFile("Gate.jpg");
-		return sf::Sprite(m_Gate);
+		auto GateImg = sf::Sprite(m_Gate);
+		GateImg.scale(0.1f, 0.1f);
+		return GateImg;
 	};
 
 private:

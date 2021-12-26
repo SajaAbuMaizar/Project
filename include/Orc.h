@@ -6,9 +6,11 @@ class Orc : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	virtual sf::Sprite draw() {
+	virtual sf::Sprite getImage() {
 		m_Orc.loadFromFile("Orc.png");
-		return sf::Sprite(m_Orc);
+		auto OrcImg = sf::Sprite(m_Orc);
+		OrcImg.scale(0.1f, 0.1f);
+		return OrcImg;
 	};
 
 private:

@@ -3,56 +3,84 @@
 
 void Board::readLevel(std::ifstream& board_file)
 {
-    std::string line;
-    board_file.seekg(0); //go back to the beginning of the file
-    getline(board_file, line);  //ignor two lines of the file (the sketch of the board starts from the 3rd line)
-    getline(board_file, line);
-    //start reading the level
     char c;
+    std::string line;
+
+    //go back to the beginning of the file
+    board_file.seekg(0);
+
+    //ignor two lines (the sketch of the board starts from the 3rd line)
+    getline(board_file, line);
+    getline(board_file, line);
+
+    //start reading the level
     while (!board_file.eof())
     {
-        for (size_t i = 0; i < m_levelSize.x; i++)
+        //for (size_t j = 2; j < m_levelSize.y ;j++) // start from line 2 (disclude two lines of data about timeLimited) [didn't used because we need j to start from 0 because we use it]
+        for (size_t j = 0; j < m_levelSize.y; j++)
         {
-            for (size_t j = 0; j < m_levelSize.y; j++)
+            for (size_t i = 0; i < m_levelSize.x; i++)
             {
+                size_t temp = j;
                 c = char(board_file.get());
                 readChar(c, i, j);
+                if (temp != j)
+                {
+                    break;
+                }
             }
         }
+        std::cout << "finished reading file\n";   // it prints this line
     }
+    std::cout << "exiting readLevel func\n"; //  it doesn't print this line
 }
 
-void Board::readChar(const char c, const size_t i, const size_t j)
+void Board::readChar(const char c, const size_t i, size_t& j)
 {
     std::cout << c << " " << i << " " << j << std::endl;
 
     // m_board[m_levelSize.x][m_levelSize.y]
-    m_board.resize(m_levelSize.x);
+    m_board.resize(m_levelSize.y);
 
-    for (unsigned int index = 0; index < m_levelSize.x; index++)
-        m_board[index].resize(m_levelSize.y);
+    for (unsigned int index = 0; index < m_levelSize.y; index++)
+        m_board[index].resize(m_levelSize.x);
     
     switch (c)
     {
     case '=':
-        m_board[i][j] = std::make_unique<Wall>(float(i),float(j));
+        m_board[j][i] = std::make_unique<Wall>(float(i),float(j));
         break;
     case '*':
-        m_board[i][j] = std::make_unique<Fire>(float(i), float(j));
+        m_board[j][i] = std::make_unique<Fire>(float(i), float(j));
         break;
     case '!':
-        m_board[i][j] = std::make_unique<Orc>(float(i), float(j));
+        m_board[j][i] = std::make_unique<Orc>(float(i), float(j));
         break;
     case '#':
-        m_board[i][j] = std::make_unique<Gate>(float(i), float(j));
+        m_board[j][i] = std::make_unique<Gate>(float(i), float(j));
         break;
     case 'X':
-        m_board[i][j] = std::make_unique<TeleportCell>(float(i), float(j));
+        m_board[j][i] = std::make_unique<TeleportCell>(float(i), float(j));
         break;
     case '@':
-        m_board[i][j] = std::make_unique<KingChair>(float(i), float(j));
+        m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
+        break;
+    case '\n':
+        m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
+        j++;
+        break;
+    default:
+        //m_board[j][i] = nullptr;
+        break;
     }
 }
+/*
+void Board::setObjectPosition(const float i, const float j)
+{
+    sf::Vector2f ObjLoc(i,j);
+    m_board[i][j]->getImage().setPosition(ObjLoc);
+}
+
     /*
 std::vector<std::vector<GameObject>> Board::getBoard()
 {
@@ -66,13 +94,27 @@ void Board::startLevel()
     while (window.isOpen())
     {
         window.clear();
+        for (size_t j = 0; j < m_levelSize.y; j++)
+        {
+            for (size_t i = 0; i < m_levelSize.x; i++)
+            {
+                std::cout << "befor if condition\n";
+                //ignore nullptr elements and print other elements to the window
+                if (m_board[j][i] != nullptr)
+                {
+                    std::cout << "in if\n";
+                    window.draw(m_board[j][i]->getImage());
+                }
+            }
+        }
+        /*
         for (unsigned int i = 0; i < m_levelSize.x; i++)
         {
             for (unsigned int j = 0; j < m_levelSize.y; j++)
             {
                 //ignore nullptr elements and print other elements to the window
-                if (m_board[i][j] != nullptr)
-                    window.draw(m_board[i][j]->draw());
+                if (m_board[j][i] != nullptr)
+                    window.draw(m_board[j][i]->getImage());
             }
         }
         /*
