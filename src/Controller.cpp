@@ -4,6 +4,8 @@
 
 enum CONSTS {BUTTONS = 3, NUM_OF_LEVELS = 3};
 
+//The constuctor for Controller, takes in the width and height of the window
+//we want to create and creates it
 Controller::Controller(int width, int height)
     : m_width(width),
     m_height(height),
@@ -11,6 +13,8 @@ Controller::Controller(int width, int height)
     m_home(width,height)
 {}
 
+//this function operates the game and runs it
+//it shows the home paje to the game and the menu on the home page
 void Controller::operateGame()
 {
     //set background
@@ -42,7 +46,7 @@ void Controller::operateGame()
                 case sf::Mouse::Button::Left: //if the button that is pressed is the left button
                     if (m_home.handleButtonsClick(location))//if the start button is pressed then enter the loop
                     {
-                        //close the toolbar window
+                        //close the HomePage window
                         m_window.close();
                         //do the start button
                         Level l;

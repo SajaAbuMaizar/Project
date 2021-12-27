@@ -7,6 +7,7 @@ class Fire : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the Fire Object and returns it
 	virtual sf::Sprite getImage() {
 		m_Fire.loadFromFile("Fire.png");
 		m_FireImg = sf::Sprite(m_Fire);

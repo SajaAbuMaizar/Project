@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Board.h"
 
-//this function
+//this function reads the level board from the file
 void Board::readLevel(std::ifstream& board_file)
 {
     char c;
@@ -28,13 +28,15 @@ void Board::readLevel(std::ifstream& board_file)
     }
 }
 
+//this function reads every character in the board file and creates
+//the object that indicates the characte
 void Board::readChar(const char c, const size_t i, size_t& j)
 {
     m_board.resize(m_levelSize.y);
     for (unsigned int index = 0; index < m_levelSize.y; index++)
         m_board[index].resize(m_levelSize.x);
 
-    if (c != '\n')
+    if (c != '\n') //ignore the break
     {
         switch (c)
         {
@@ -74,6 +76,7 @@ std::vector<std::vector<GameObject>> Board::getBoard()
     return m_board;
 }*/
 
+//this function starts the level, creates the window and prints the level on it
 void Board::startLevel()
 {
     sf::RenderWindow window(sf::VideoMode(m_levelSize.x*45, m_levelSize.y*45 + 100), "Save The King Level ");//do the enum / 45 = wall height/width / 100 = for the info

@@ -6,6 +6,7 @@ class Gate : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the Gate Object and returns it
 	virtual sf::Sprite getImage() {
 		m_Gate.loadFromFile("Gate.png");
 		m_GateImg = sf::Sprite(m_Gate);
