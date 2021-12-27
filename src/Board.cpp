@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Board.h"
 
+//this function
 void Board::readLevel(std::ifstream& board_file)
 {
     char c;
