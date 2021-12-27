@@ -1,6 +1,5 @@
 #include "Controller.h"
 #include "Level.h"
-#include <iostream>
 #include <fstream>
 
 const int BUTTONS = 3;

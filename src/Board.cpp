@@ -1,5 +1,6 @@
-#include "Board.h"
+#include <typeinfo>
 #include <iostream>
+#include "Board.h"
 
 void Board::readLevel(std::ifstream& board_file)
 {
@@ -21,57 +22,78 @@ void Board::readLevel(std::ifstream& board_file)
         {
             for (size_t i = 0; i < m_levelSize.x; i++)
             {
-                size_t temp = j;
+                //size_t temp = j;
                 c = char(board_file.get());
-                readChar(c, i, j);
-                if (temp != j)
+                
+                if (c == 10)
                 {
                     break;
                 }
+                std::cout << int(c) << " " << i << " " << j << std::endl;
+                if (c != -1 && c != 10)
+                {
+                    if (j == 0)
+                    {
+                        readChar(c, i, j);
+                    }
+                    if (i != 0 && j > 0)
+                    {
+                        size_t temp = i - 1;
+                        readChar(c, temp, j);
+                    }
+                }
+                  /*
+                if (temp != j)
+                {
+                    break;
+                }*/
             }
         }
-        std::cout << "finished reading file\n";   // it prints this line
+        //std::cout << "finished reading file\n";   // it prints this line
     }
-    std::cout << "exiting readLevel func\n"; //  it doesn't print this line
+    //std::cout << "exiting readLevel func\n"; //  it doesn't print this line
 }
 
 void Board::readChar(const char c, const size_t i, size_t& j)
 {
-    std::cout << c << " " << i << " " << j << std::endl;
+    //std::cout << int(c) << " " << i << " " << j << std::endl;
 
     // m_board[m_levelSize.x][m_levelSize.y]
     m_board.resize(m_levelSize.y);
 
     for (unsigned int index = 0; index < m_levelSize.y; index++)
         m_board[index].resize(m_levelSize.x);
-    
-    switch (c)
+    if (c != '\n')
     {
-    case '=':
-        m_board[j][i] = std::make_unique<Wall>(float(i),float(j));
-        break;
-    case '*':
-        m_board[j][i] = std::make_unique<Fire>(float(i), float(j));
-        break;
-    case '!':
-        m_board[j][i] = std::make_unique<Orc>(float(i), float(j));
-        break;
-    case '#':
-        m_board[j][i] = std::make_unique<Gate>(float(i), float(j));
-        break;
-    case 'X':
-        m_board[j][i] = std::make_unique<TeleportCell>(float(i), float(j));
-        break;
-    case '@':
-        m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
-        break;
-    case '\n':
-        m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
-        j++;
-        break;
-    default:
-        //m_board[j][i] = nullptr;
-        break;
+
+        switch (c)
+        {
+        case '=':
+            m_board[j][i] = std::make_unique<Wall>(float(i), float(j));
+            break;
+        case '*':
+            m_board[j][i] = std::make_unique<Fire>(float(i), float(j));
+            break;
+        case '!':
+            m_board[j][i] = std::make_unique<Orc>(float(i), float(j));
+            break;
+        case '#':
+            m_board[j][i] = std::make_unique<Gate>(float(i), float(j));
+            break;
+        case 'X':
+            m_board[j][i] = std::make_unique<TeleportCell>(float(i), float(j));
+            break;
+        case '@':
+            m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
+            break;
+        case '\n':
+            m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
+            //j++;
+            break;
+        default:
+            m_board[j][i] = nullptr;
+            break;
+        }
     }
 }
 /*
@@ -94,19 +116,20 @@ void Board::startLevel()
     while (window.isOpen())
     {
         window.clear();
+        std::cout << "begin here\n";
         for (size_t j = 0; j < m_levelSize.y; j++)
         {
             for (size_t i = 0; i < m_levelSize.x; i++)
             {
-                std::cout << "befor if condition\n";
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
-                    std::cout << "in if\n";
+                    std::cout << typeid(*m_board[j][i]).name() << std::endl;
                     window.draw(m_board[j][i]->getImage());
                 }
             }
         }
+        std::cout << "end here\n";
         /*
         for (unsigned int i = 0; i < m_levelSize.x; i++)
         {

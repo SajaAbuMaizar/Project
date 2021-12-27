@@ -1,5 +1,4 @@
 #include "ToolBar.h"
-#include <iostream>
 #include <thread>
 
 const int WIDTH = 1000;

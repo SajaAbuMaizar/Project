@@ -37,7 +37,7 @@ void Level::buildLevel()
     std::cout << m_levelSize.x << " " << m_levelSize.y << std::endl;//
     Board b(m_levelSize);
     b.readLevel(board_file);
-    std::cout << "here\n";
+    //std::cout << "here\n";
     b.startLevel();
 }
 
