@@ -8,7 +8,7 @@ inline auto font = sf::Font();
 class HomePage
 {
 public:
-	HomePage();
+	HomePage(int width, int hight);
 	std::vector <sf::Sprite> getToolButtons() const;
 	void initializeImage();
 	bool handleToolsClick(const sf::Vector2f& location);
@@ -20,4 +20,5 @@ private:
 	sf::Texture m_help;
 	sf::Texture m_exitGame;
 	sf::Text m_helpText;
+	sf::Vector2f m_dimentions;
 };

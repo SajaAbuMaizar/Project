@@ -1,14 +1,15 @@
 #include "HomePage.h"
 #include <thread>
+#include <iostream>
 
-const int WIDTH = 1000;
-const int HEIGHT = 600;
 const int BUTTONS = 3;
 
 enum Buttons{start, help, exitGame};
 
-HomePage::HomePage()
+HomePage::HomePage(int width, int height)
 {
+	m_dimentions.x = float(width);
+	m_dimentions.y = float(height);
 
 	m_startGame.loadFromFile("Start Button.png");
 	auto startImg = sf::Sprite(m_startGame);
@@ -29,7 +30,7 @@ void HomePage::initializeImage()
 {
 	for (int counter = 0; counter < BUTTONS; counter++)
 	{
-		sf::Vector2f toolLoc(float(WIDTH / 2), float((HEIGHT / 6)*(counter+1) + 200)); // +200 to print the buttons under the title "Save The King"
+		sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6)*(counter+1) + 200)); // +200 to print the buttons under the title "Save The King"
 		sf::Vector2f toolScale(0.7f, 0.7f);
 		m_toolButtons[counter].setOrigin(sf::Vector2f(m_toolButtons[counter].getTexture()->getSize() / 2u));
 		m_toolButtons[counter].setPosition(toolLoc);
@@ -44,7 +45,7 @@ std::vector <sf::Sprite> HomePage::getToolButtons() const
 //	the function builds a Help object 
 void HomePage::ShowHelp()
 {
-	Help help(WIDTH, HEIGHT);
+	Help help(m_dimentions.x, m_dimentions.y);
 	help.showHelp();
 }
 

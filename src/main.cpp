@@ -1,10 +1,10 @@
 #include "Controller.h"
 
-void setWindowDimentions(float& width, float& height);
+void setWindowDimentions(int& width, int& height);
 
 int main()
 {
-	float width, height;
+	int width, height;
 
 	setWindowDimentions(width, height);
 	Controller game(width,height);
@@ -13,7 +13,7 @@ int main()
 	return 0;
 }
 
-void setWindowDimentions(float& width, float& height)
+void setWindowDimentions(int& width, int& height)
 {
 	// temp sf::Texture to optain the dimentions of the windows
 	sf::Texture tempTex;

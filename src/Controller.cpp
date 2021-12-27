@@ -8,7 +8,8 @@ const int NUM_OF_LEVELS = 3;
 Controller::Controller(int width, int height)
     : m_width(width),
     m_height(height),
-    m_window(sf::VideoMode(width, height), "Save The King")
+    m_window(sf::VideoMode(width, height), "Save The King"),
+    m_tool(width,height)
 {}
 
 void Controller::operateGame()
