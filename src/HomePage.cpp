@@ -5,6 +5,8 @@ enum CONSTS { BUTTONS = 3 };
 
 enum Buttons{START_GAME, SHOW_HELP, EXIT_GAME};
 
+//The c-tor of HomePage sets the width and height of the window of the HomePage
+//and creates the buttons that are shown on the screen
 HomePage::HomePage(int width, int height)
 {
 	m_dimentions.x = float(width);
@@ -25,6 +27,7 @@ HomePage::HomePage(int width, int height)
 	initializeImage();
 }
 
+//this function initialize the images of the button
 void HomePage::initializeImage()
 {
 	for (int counter = 0; counter < BUTTONS; counter++)
@@ -41,13 +44,15 @@ std::vector <sf::Sprite> HomePage::getHomeButtons() const
 {
 	return m_homeButtons;
 }
-//	the function builds a Help object 
+
+// the function builds a Help object 
 void HomePage::ShowHelp()
 {
 	Help help((int)m_dimentions.x, (int)m_dimentions.y);
 	help.showHelp();
 }
 
+//this function handles the click on the buttons of the menu in the HomePage
 bool HomePage::handleButtonsClick(const sf::Vector2f& location)
 {
 	for (int index = 0; index < BUTTONS; index++)

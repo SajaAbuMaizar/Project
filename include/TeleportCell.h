@@ -6,6 +6,7 @@ class TeleportCell : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the Teleport Cell Object and returns it
 	virtual sf::Sprite getImage() {
 		m_TeleportCell.loadFromFile("TeleportCell.png");
 		m_TeleportCellImg = sf::Sprite(m_TeleportCell);

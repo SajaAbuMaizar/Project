@@ -6,6 +6,7 @@ class Orc : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the Orc Object and returns it
 	virtual sf::Sprite getImage() {
 		m_Orc.loadFromFile("Orc.png");
 		m_OrcImg = sf::Sprite(m_Orc);

@@ -7,6 +7,7 @@ class Wall : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the Wall Object and returns it
 	virtual sf::Sprite getImage() {
 		m_Wall.loadFromFile("wall.jpg");
 		m_wallImg = sf::Sprite(m_Wall);

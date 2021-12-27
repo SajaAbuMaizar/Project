@@ -1,5 +1,6 @@
 #include "King.h"
 
+//This function creates the image of the king and initalizez it and returns it
 sf::Sprite King::getImage()
 {
 	m_King.loadFromFile("wall.jpg");

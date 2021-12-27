@@ -6,6 +6,7 @@ class KingChair : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
+	//this function creates the image of the King Chair Object and returns it
 	virtual sf::Sprite getImage() {
 		m_KingChair.loadFromFile("KingChair.png");
 		m_KingChairImg = sf::Sprite(m_KingChair);
