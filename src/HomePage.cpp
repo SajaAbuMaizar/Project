@@ -44,7 +44,7 @@ std::vector <sf::Sprite> HomePage::getHomeButtons() const
 //	the function builds a Help object 
 void HomePage::ShowHelp()
 {
-	Help help(m_dimentions.x, m_dimentions.y);
+	Help help((int)m_dimentions.x, (int)m_dimentions.y);
 	help.showHelp();
 }
 
