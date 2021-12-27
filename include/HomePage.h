@@ -9,13 +9,13 @@ class HomePage
 {
 public:
 	HomePage(int width, int hight);
-	std::vector <sf::Sprite> getToolButtons() const;
+	std::vector <sf::Sprite> getHomeButtons() const;
 	void initializeImage();
-	bool handleToolsClick(const sf::Vector2f& location);
+	bool handleButtonsClick(const sf::Vector2f& location);
 	void ShowHelp();
 
 private:
-	std::vector <sf::Sprite> m_toolButtons;
+	std::vector <sf::Sprite> m_homeButtons;
 	sf::Texture m_startGame;
 	sf::Texture m_help;
 	sf::Texture m_exitGame;

@@ -9,7 +9,7 @@ Controller::Controller(int width, int height)
     : m_width(width),
     m_height(height),
     m_window(sf::VideoMode(width, height), "Save The King"),
-    m_tool(width,height)
+    m_home(width,height)
 {}
 
 void Controller::operateGame()
@@ -25,7 +25,7 @@ void Controller::operateGame()
         m_window.draw(backgroundImg);
         for (int counter = 0; counter < BUTTONS; counter++)
         {
-            m_window.draw(m_tool.getToolButtons()[counter]);
+            m_window.draw(m_home.getHomeButtons()[counter]);
         }
         m_window.display();
         if (auto event = sf::Event{}; m_window.pollEvent(event))
@@ -41,7 +41,7 @@ void Controller::operateGame()
                 switch (event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left: //if the button that is pressed is the left button
-                    if (m_tool.handleToolsClick(location))//if the start button is pressed then enter the loop
+                    if (m_home.handleButtonsClick(location))//if the start button is pressed then enter the loop
                     {
                         //close the toolbar window
                         m_window.close();

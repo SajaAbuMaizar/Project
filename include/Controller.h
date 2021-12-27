@@ -10,7 +10,7 @@ public:
 
 private:
 	sf::RenderWindow m_window;
-	HomePage m_tool;
+	HomePage m_home;
 	int m_width;
 	int m_height;
 };
