@@ -1,9 +1,9 @@
 #include "HomePage.h"
 #include <thread>
 
-const int BUTTONS = 3;
+enum CONSTS { BUTTONS = 3 };
 
-enum Buttons{start, help, exitGame};
+enum Buttons{START_GAME, SHOW_HELP, EXIT_GAME};
 
 HomePage::HomePage(int width, int height)
 {
@@ -56,13 +56,13 @@ bool HomePage::handleButtonsClick(const sf::Vector2f& location)
 		{
 			switch (index)
 			{
-			case start://if the user pressed the start button
+			case START_GAME://if the user pressed the start button
 				return true;
 				break;
-			case help://if the user pressed the help button
+			case SHOW_HELP://if the user pressed the help button
 				ShowHelp();
 				break;
-			case exitGame: //if the user pressed the exit button
+			case EXIT_GAME: //if the user pressed the exit button
 				exit(0);
 				break;
 			}

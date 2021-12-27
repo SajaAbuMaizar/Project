@@ -1,10 +1,9 @@
 #include "Help.h"
 
-const unsigned int NUM_OF_ICONS = 4;
-enum Icons {king, mage, warrior, thief};
+enum CONSTS { NUM_OF_ICONS = 4, CHAR_WIDTH = 30};
+enum Icons {KING, MAGE, WARRIOR, THIEF};
 
 // the c-tor reseives the dimentions of the Help window 
-// and the number of the icons in the game (from the tooBar).
 // It inializes the elemnts of the vector m_icons and the elements of vector m_helpText
 Help::Help(int width, int hight) :
     m_width(width),
@@ -66,7 +65,7 @@ void Help::fillHelpTextVec()
 
     for (int index = 0; index < m_helpText.size(); index++)
     {
-        sf::Vector2f linePos(float(0), float(30 * index));
+        sf::Vector2f linePos(float(0), float(CHAR_WIDTH * index));
         m_helpText[index].setPosition(linePos);
         m_helpText[index].setCharacterSize(20);
     }
@@ -92,7 +91,7 @@ void Help::fillIconsVec()
 
     for (int counter = 0; counter < m_iconsVec.size(); counter++)
     {
-        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float(30 * m_helpText.size())); //30 * m_helpText.size() to print the picture under the text
+        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float(CHAR_WIDTH * m_helpText.size())); //CHAR_WIDTH * m_helpText.size() to print the picture under the text
         sf::Vector2f iconScale(0.3f, 0.3f);
         m_iconsVec[counter].setPosition(iconLoc);
         m_iconsVec[counter].scale(iconScale);
@@ -109,16 +108,16 @@ void Help::handleIconsClick(const sf::Vector2f& location)
         {
             switch (index)
             {
-            case king: // king icon is pressed
+            case KING: // king icon is pressed
                 info.setString("king");
                 break;
-            case mage: // mage icon is pressed
+            case MAGE: // mage icon is pressed
                 info.setString("mage");
                 break;
-            case warrior: // warrior icon is pressed
+            case WARRIOR: // warrior icon is pressed
                 info.setString("warrior");
                 break;
-            case thief: // theif icon is pressed 
+            case THIEF: // theif icon is pressed 
                 info.setString("thief");
                 break;
             }
