@@ -4,5 +4,9 @@
                                                "Level.cpp"
                                                "TimeLimitedLevel.cpp"
                                                "Board.cpp"
-                                               "Help.cpp")
+                                               "Help.cpp"
+                                               "King.cpp"
+                                               "Mage.cpp"
+                                               "Warrior.cpp"
+                                               "Thief.cpp")
 

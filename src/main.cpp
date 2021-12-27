@@ -7,8 +7,8 @@ const int HEIGHT = 600;
 
 int main()
 {
-	Controller gameControl(WIDTH,HEIGHT);
-	gameControl.operateGame();
+	Controller game(WIDTH,HEIGHT);
+	game.operateGame();
 	
 	return 0;
 }
