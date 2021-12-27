@@ -8,11 +8,13 @@ public:
 	using StaticObject::StaticObject;
 	virtual sf::Sprite getImage() {
 		m_Orc.loadFromFile("Orc.png");
-		auto OrcImg = sf::Sprite(m_Orc);
-		OrcImg.scale(0.1f, 0.1f);
-		return OrcImg;
+		m_OrcImg = sf::Sprite(m_Orc);
+		m_OrcImg.scale(0.1f, 0.1f);
+		m_OrcImg.setPosition(45 * m_position.x, 45 * m_position.y);
+		return m_OrcImg;
 	};
 
 private:
 	sf::Texture m_Orc;
+	sf::Sprite m_OrcImg;
 };

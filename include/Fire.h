@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "StaticObject.h"
 
 class Fire : public StaticObject
@@ -8,11 +9,13 @@ public:
 	using StaticObject::StaticObject;
 	virtual sf::Sprite getImage() {
 		m_Fire.loadFromFile("Fire.png");
-		auto FireImg = sf::Sprite(m_Fire);
-		FireImg.scale(0.1f, 0.1f);
-		return FireImg;
+		m_FireImg = sf::Sprite(m_Fire);
+		m_FireImg.scale(0.1f, 0.1f);
+		m_FireImg.setPosition(45 * m_position.x, 45 * m_position.y);
+		return m_FireImg;
 	};
 
 private:
 	sf::Texture m_Fire;
+	sf::Sprite m_FireImg;
 };

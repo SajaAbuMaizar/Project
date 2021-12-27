@@ -21,9 +21,7 @@ void Board::readLevel(std::ifstream& board_file)
         {
             c = char(board_file.get());
             if (c == 10 || c == -1) // 10 =\n , -1 = eof
-            {
                 break;
-            }
             readChar(c, i, j);
         }
     }
@@ -57,12 +55,7 @@ void Board::readChar(const char c, const size_t i, size_t& j)
         case '@':
             m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
             break;
-        case '\n':
-            m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
-            //j++;
-            break;
         default:
-            m_board[j][i] = nullptr;
             break;
         }
     }
@@ -82,12 +75,11 @@ std::vector<std::vector<GameObject>> Board::getBoard()
 
 void Board::startLevel()
 {
-    sf::RenderWindow window(sf::VideoMode(500, 500), "Save The King Level ");
+    sf::RenderWindow window(sf::VideoMode(m_levelSize.x*45, m_levelSize.y*45 + 100), "Save The King Level ");//do the enum / 45 = wall height/width / 100 = for the info
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
     while (window.isOpen())
     {
         window.clear();
-        std::cout << "begin here\n";
         for (size_t j = 0; j < m_levelSize.y; j++)
         {
             for (size_t i = 0; i < m_levelSize.x; i++)
@@ -95,12 +87,10 @@ void Board::startLevel()
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
-                    std::cout << typeid(*m_board[j][i]).name() << std::endl;
                     window.draw(m_board[j][i]->getImage());
                 }
             }
         }
-        std::cout << "end here\n";
         /*
         for (unsigned int i = 0; i < m_levelSize.x; i++)
         {

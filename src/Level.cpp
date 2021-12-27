@@ -34,10 +34,8 @@ void Level::buildLevel()
         getline(board_file, time_str); //ignore a line
     }
     calculateLevelSize(board_file);
-    std::cout << m_levelSize.x << " " << m_levelSize.y << std::endl;//
     Board b(m_levelSize);
     b.readLevel(board_file);
-    //std::cout << "here\n";
     b.startLevel();
 }
 
