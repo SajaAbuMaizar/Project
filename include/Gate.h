@@ -10,7 +10,7 @@ public:
 		m_Gate.loadFromFile("Gate.jpg");
 		m_GateImg = sf::Sprite(m_Gate);
 		m_GateImg.scale(0.1f, 0.1f);
-		m_GateImg.setPosition(45 * m_position.x, 45 * m_position.y);
+		m_GateImg.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
 		return m_GateImg;
 	};
 

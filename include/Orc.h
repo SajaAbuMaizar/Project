@@ -10,7 +10,7 @@ public:
 		m_Orc.loadFromFile("Orc.png");
 		m_OrcImg = sf::Sprite(m_Orc);
 		m_OrcImg.scale(0.1f, 0.1f);
-		m_OrcImg.setPosition(45 * m_position.x, 45 * m_position.y);
+		m_OrcImg.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
 		return m_OrcImg;
 	};
 

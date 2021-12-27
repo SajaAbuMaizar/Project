@@ -1,8 +1,7 @@
 #include "Level.h"
 #include "Board.h"
 
-const int NUM_OF_LEVELS = 3;
-
+enum CONSTS { NUM_0F_LEVELS = 3 };
 Level::Level() :
     m_level(1),
     m_timer(0),
@@ -46,7 +45,7 @@ std::string Level::createFileName()
 
 void Level::levelOperator()
 {
-    for (; m_level <= NUM_OF_LEVELS; m_level++)
+    for (; m_level <= NUM_0F_LEVELS; m_level++)
     {
         m_levelSize.x = m_levelSize.y = 0;
         m_fileName = createFileName();

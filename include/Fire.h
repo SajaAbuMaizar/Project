@@ -11,7 +11,7 @@ public:
 		m_Fire.loadFromFile("Fire.png");
 		m_FireImg = sf::Sprite(m_Fire);
 		m_FireImg.scale(0.1f, 0.1f);
-		m_FireImg.setPosition(45 * m_position.x, 45 * m_position.y);
+		m_FireImg.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
 		return m_FireImg;
 	};
 

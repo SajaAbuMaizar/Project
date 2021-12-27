@@ -10,5 +10,6 @@ public:
 
 protected:
 	sf::Vector2f m_position;
+	int m_objectSizeFitter = 45;
 
 };
