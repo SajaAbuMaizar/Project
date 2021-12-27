@@ -128,11 +128,15 @@ void Help::handleIconsClick(const sf::Vector2f& location)
 
 void Help::showInfo(const sf::Text info)
 {
+    // set background for helpWindow
+    auto backgroundImg = sf::Sprite(m_background);
+
     sf::RenderWindow infoWindow(sf::VideoMode(m_width,m_hight), "More Info");
 
     while (infoWindow.isOpen())
     {
         infoWindow.clear();
+        infoWindow.draw(backgroundImg);
         infoWindow.draw(info);
         infoWindow.display();
 
