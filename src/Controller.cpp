@@ -3,6 +3,7 @@
 #include <fstream>
 
 const int BUTTONS = 3;
+const int NUM_OF_LEVELS = 3;
 
 Controller::Controller(int width, int height)
     : m_width(width),

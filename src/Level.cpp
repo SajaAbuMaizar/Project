@@ -1,10 +1,10 @@
 #include "Level.h"
 #include "Board.h"
 
-const int NUM_OF_LEVELS = 1;
+const int NUM_OF_LEVELS = 3;
 
 Level::Level() :
-    m_level(1), //change "1" to the number of the current level. the c-tor should probubly receive it as sa param.
+    m_level(1),
     m_timer(0),
     m_levelSize(0,0)
 {}
@@ -39,8 +39,6 @@ void Level::buildLevel()
     b.startLevel();
 }
 
-
-
 std::string Level::createFileName()
 {
     return (std::to_string(m_level) + ".txt");
@@ -50,6 +48,7 @@ void Level::levelOperator()
 {
     for (; m_level <= NUM_OF_LEVELS; m_level++)
     {
+        m_levelSize.x = m_levelSize.y = 0;
         m_fileName = createFileName();
         buildLevel(); //why to make file name private? when lose/time is up
     }

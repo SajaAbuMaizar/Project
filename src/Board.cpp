@@ -91,16 +91,7 @@ void Board::startLevel()
                 }
             }
         }
-        /*
-        for (unsigned int i = 0; i < m_levelSize.x; i++)
-        {
-            for (unsigned int j = 0; j < m_levelSize.y; j++)
-            {
-                //ignore nullptr elements and print other elements to the window
-                if (m_board[j][i] != nullptr)
-                    window.draw(m_board[j][i]->getImage());
-            }
-        }
+        
         /*
         m_clock.getElapsedTime();
         sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
