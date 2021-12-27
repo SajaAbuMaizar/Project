@@ -5,10 +5,10 @@
 
 inline auto font = sf::Font();
 
-class ToolBar
+class HomePage
 {
 public:
-	ToolBar();
+	HomePage();
 	std::vector <sf::Sprite> getToolButtons() const;
 	void initializeImage();
 	bool handleToolsClick(const sf::Vector2f& location);

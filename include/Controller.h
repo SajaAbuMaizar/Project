@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "ToolBar.h"
+#include "HomePage.h"
 
 class Controller {
 public:
@@ -10,7 +10,7 @@ public:
 
 private:
 	sf::RenderWindow m_window;
-	ToolBar m_tool;
+	HomePage m_tool;
 	int m_width;
 	int m_height;
 };

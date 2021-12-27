@@ -1,4 +1,4 @@
-#include "ToolBar.h"
+#include "HomePage.h"
 #include <thread>
 
 const int WIDTH = 1000;
@@ -7,7 +7,7 @@ const int BUTTONS = 3;
 
 enum Buttons{start, help, exitGame};
 
-ToolBar::ToolBar()
+HomePage::HomePage()
 {
 
 	m_startGame.loadFromFile("Start Button.png");
@@ -25,7 +25,7 @@ ToolBar::ToolBar()
 	initializeImage();
 }
 
-void ToolBar::initializeImage()
+void HomePage::initializeImage()
 {
 	for (int counter = 0; counter < BUTTONS; counter++)
 	{
@@ -37,18 +37,18 @@ void ToolBar::initializeImage()
 	}
 }
 
-std::vector <sf::Sprite> ToolBar::getToolButtons() const
+std::vector <sf::Sprite> HomePage::getToolButtons() const
 {
 	return m_toolButtons;
 }
 //	the function builds a Help object 
-void ToolBar::ShowHelp()
+void HomePage::ShowHelp()
 {
 	Help help(WIDTH, HEIGHT);
 	help.showHelp();
 }
 
-bool ToolBar::handleToolsClick(const sf::Vector2f& location)
+bool HomePage::handleToolsClick(const sf::Vector2f& location)
 {
 	for (int index = 0; index < BUTTONS; index++)
 	{
