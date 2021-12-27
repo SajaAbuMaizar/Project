@@ -1,7 +1,6 @@
 #include "Help.h"
 
 const unsigned int NUM_OF_ICONS = 4;
-const unsigned int small_size = 500;
 enum Icons {king, mage, warrior, thief};
 
 // the c-tor reseives the dimentions of the Help window 
@@ -130,7 +129,7 @@ void Help::handleIconsClick(const sf::Vector2f& location)
 
 void Help::showInfo(const sf::Text info)
 {
-    sf::RenderWindow infoWindow(sf::VideoMode(small_size, small_size), "More Info");
+    sf::RenderWindow infoWindow(sf::VideoMode(m_width,m_hight), "More Info");
 
     while (infoWindow.isOpen())
     {
