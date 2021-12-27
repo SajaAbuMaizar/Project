@@ -15,57 +15,28 @@ void Board::readLevel(std::ifstream& board_file)
     getline(board_file, line);
 
     //start reading the level
-    while (!board_file.eof())
+    for (size_t j = 0; j < m_levelSize.y; j++)
     {
-        //for (size_t j = 2; j < m_levelSize.y ;j++) // start from line 2 (disclude two lines of data about timeLimited) [didn't used because we need j to start from 0 because we use it]
-        for (size_t j = 0; j < m_levelSize.y; j++)
+        for (size_t i = 0; i < m_levelSize.x + 1; i++)
         {
-            for (size_t i = 0; i < m_levelSize.x; i++)
+            c = char(board_file.get());
+            if (c == 10 || c == -1) // 10 =\n , -1 = eof
             {
-                //size_t temp = j;
-                c = char(board_file.get());
-                
-                if (c == 10)
-                {
-                    break;
-                }
-                std::cout << int(c) << " " << i << " " << j << std::endl;
-                if (c != -1 && c != 10)
-                {
-                    if (j == 0)
-                    {
-                        readChar(c, i, j);
-                    }
-                    if (i != 0 && j > 0)
-                    {
-                        size_t temp = i - 1;
-                        readChar(c, temp, j);
-                    }
-                }
-                  /*
-                if (temp != j)
-                {
-                    break;
-                }*/
+                break;
             }
+            readChar(c, i, j);
         }
-        //std::cout << "finished reading file\n";   // it prints this line
     }
-    //std::cout << "exiting readLevel func\n"; //  it doesn't print this line
 }
 
 void Board::readChar(const char c, const size_t i, size_t& j)
 {
-    //std::cout << int(c) << " " << i << " " << j << std::endl;
-
-    // m_board[m_levelSize.x][m_levelSize.y]
     m_board.resize(m_levelSize.y);
-
     for (unsigned int index = 0; index < m_levelSize.y; index++)
         m_board[index].resize(m_levelSize.x);
+
     if (c != '\n')
     {
-
         switch (c)
         {
         case '=':
