@@ -13,7 +13,8 @@ inline auto font1 = sf::Font();
 class Board
 {
 public:
-	Board(sf::Vector2u levelSize) : m_levelSize(levelSize) {};
+	Board(sf::Vector2u levelSize, int timer, sf::Clock clock) : 
+		m_levelSize(levelSize), m_timer(timer), m_clock(clock){};
 	void readLevel(std::ifstream& board_file);
 	void startLevel();
 	//std::vector<std::vector<GameObject>> getBoard();
@@ -23,6 +24,8 @@ public:
 private:
 	std::vector<std::vector<std::unique_ptr<GameObject>>> m_board;
 	sf::Vector2u m_levelSize;
+	int m_timer;
+	sf::Clock m_clock;
 	// Helper Functions:
 	void readChar(const char c, const size_t i, size_t& j);
 

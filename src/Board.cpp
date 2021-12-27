@@ -91,20 +91,19 @@ void Board::startLevel()
                     window.draw(m_board[j][i]->getImage());
                 }
             }
-        }
+        }        
         
-        /*
         m_clock.getElapsedTime();
         sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
         m_helpText.setCharacterSize(20);
-        float time2 = m_timer - m_clock.getElapsedTime().asSeconds();
+        int time2 = int(m_timer - m_clock.getElapsedTime().asSeconds());
         sf::Text m_time = sf::Text(sf::String(std::to_string(time2)), font1);
         m_time.setCharacterSize(20);
-        sf::Vector2f pos(17.0f,17.0f);
+        sf::Vector2f pos(17.0f,(m_levelSize.y +1) * 45); // 45 = hight of icon, change this later
         m_time.setPosition(pos);
-        window.draw(m_helpText);
+        //window.draw(m_helpText);
         window.draw(m_time);
-        */
+        
         window.display();
         if (auto event = sf::Event{}; window.pollEvent(event))
         {

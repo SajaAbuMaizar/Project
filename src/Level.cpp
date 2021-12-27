@@ -33,7 +33,7 @@ void Level::buildLevel()
         getline(board_file, time_str); //ignore a line
     }
     calculateLevelSize(board_file);
-    Board b(m_levelSize);
+    Board b(m_levelSize, m_timer, m_clock);
     b.readLevel(board_file);
     b.startLevel();
 }
@@ -63,4 +63,3 @@ void Level::calculateLevelSize(std::ifstream& board_file)
         m_levelSize.x = ((line.size() > m_levelSize.x) ? unsigned int(line.size()) : m_levelSize.x);
     }
 }
-

@@ -21,6 +21,7 @@ private:
 	int m_level;
 	sf::Clock m_clock;
 	float m_timer;
+	sf::Text m_time;
 	std::string m_fileName;
 	sf::Vector2u m_levelSize;
 	// Helper Funvtions:
