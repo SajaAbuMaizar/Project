@@ -15,13 +15,13 @@ void Controller::operateGame()
 {
     //set background
     sf::Texture background;
-    background.loadFromFile("Background.png");
+    background.loadFromFile("Home Page.png");
     auto backgroundImg = sf::Sprite(background);
 
     while (m_window.isOpen())
     {
         m_window.clear();
-        //m_window.draw(backgroundImg);
+        m_window.draw(backgroundImg);
         for (int counter = 0; counter < BUTTONS; counter++)
         {
             m_window.draw(m_tool.getToolButtons()[counter]);

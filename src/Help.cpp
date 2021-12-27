@@ -18,9 +18,15 @@ Help::Help(int width, int hight) :
 void Help::showHelp()
 {
     sf::RenderWindow helpWindow(sf::VideoMode(m_width, m_hight), "Help");
+
+    // set background for helpWindow
+    m_background.loadFromFile("Background.png");
+    auto backgroundImg = sf::Sprite(m_background);
+
     while (helpWindow.isOpen())
     {
         helpWindow.clear();
+        helpWindow.draw(backgroundImg);
         for (int index = 0; index < m_helpText.size(); index++)
             helpWindow.draw(m_helpText[index]);
         
@@ -48,15 +54,15 @@ void Help::showHelp()
 
 void Help::fillHelpTextVec()
 {
-    font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 
-    m_helpText.push_back(sf::Text("To switch between the character press p.\n", font));
-    m_helpText.push_back(sf::Text("To move right press the right arrow.\n", font));
-    m_helpText.push_back(sf::Text("To move left press the left arrow.\n", font));
-    m_helpText.push_back(sf::Text("To move up press the up arrow.\n", font));
-    m_helpText.push_back(sf::Text("To move down press the down arrow.\n", font));
-    m_helpText.push_back(sf::Text("Press on a character for more information about it.\n", font));
-    m_helpText.push_back(sf::Text("Press the X icon to exit the Help window.\n", font));
+    m_helpText.push_back(sf::Text("To switch between the character press p.\n", m_font));
+    m_helpText.push_back(sf::Text("To move right press the right arrow.\n", m_font));
+    m_helpText.push_back(sf::Text("To move left press the left arrow.\n", m_font));
+    m_helpText.push_back(sf::Text("To move up press the up arrow.\n", m_font));
+    m_helpText.push_back(sf::Text("To move down press the down arrow.\n", m_font));
+    m_helpText.push_back(sf::Text("Press on a character for more information about it.\n", m_font));
+    m_helpText.push_back(sf::Text("Press the X icon to exit the Help window.\n", m_font));
 
 
     for (int index = 0; index < m_helpText.size(); index++)
@@ -87,7 +93,7 @@ void Help::fillIconsVec()
 
     for (int counter = 0; counter < m_iconsVec.size(); counter++)
     {
-        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float((m_hight / 3) + m_helpText.size())); //+ m_helpText.size() is to print the picture under the text
+        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float(30 * m_helpText.size())); //30 * m_helpText.size() to print the picture under the text
         sf::Vector2f iconScale(0.3f, 0.3f);
         m_iconsVec[counter].setPosition(iconLoc);
         m_iconsVec[counter].scale(iconScale);
@@ -97,7 +103,7 @@ void Help::fillIconsVec()
 void Help::handleIconsClick(const sf::Vector2f& location)
 {
     sf::Text info;
-    info.setFont(font);
+    info.setFont(m_font);
     for (int index = 0; index < NUM_OF_ICONS; index++)
     {
         if (m_iconsVec[index].getGlobalBounds().contains(location))
@@ -119,10 +125,10 @@ void Help::handleIconsClick(const sf::Vector2f& location)
             }
         }
     }
-    openInfoWindow(info);
+    showInfo(info);
 }
 
-void Help::openInfoWindow(const sf::Text info)
+void Help::showInfo(const sf::Text info)
 {
     sf::RenderWindow infoWindow(sf::VideoMode(small_size, small_size), "More Info");
 

@@ -10,7 +10,7 @@ public:
 	void fillHelpTextVec();
 	void fillIconsVec();
 	void handleIconsClick(const sf::Vector2f& location);
-	void openInfoWindow(const sf::Text info);
+	void showInfo(const sf::Text info);
 
 private:
 	std::vector<sf::Sprite> m_iconsVec;
@@ -19,7 +19,8 @@ private:
 	sf::Texture m_mageTex;
 	sf::Texture m_warriorTex;
 	sf::Texture m_thiefTex;
-	sf::Font font;
+	sf::Texture m_background;
+	sf::Font m_font;
 	int m_width;
 	int m_hight;
 };

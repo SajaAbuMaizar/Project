@@ -30,7 +30,7 @@ void ToolBar::initializeImage()
 {
 	for (int counter = 0; counter < BUTTONS; counter++)
 	{
-		sf::Vector2f toolLoc(float(WIDTH / 2), float((HEIGHT / 6)*(counter+1)));
+		sf::Vector2f toolLoc(float(WIDTH / 2), float((HEIGHT / 6)*(counter+1) + 200)); // +200 to print the buttons under the title "Save The King"
 		sf::Vector2f toolScale(0.7f, 0.7f);
 		m_toolButtons[counter].setOrigin(sf::Vector2f(m_toolButtons[counter].getTexture()->getSize() / 2u));
 		m_toolButtons[counter].setPosition(toolLoc);
