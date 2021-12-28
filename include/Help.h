@@ -7,8 +7,6 @@ class Help
 public:
 	Help(int width, int hight);
 	void showHelp();
-	void fillHelpTextVec();
-	void fillIconsVec();
 	void handleIconsClick(const sf::Vector2f& location);
 	void showInfo(const sf::Text info);
 
@@ -23,4 +21,8 @@ private:
 	sf::Font m_font;
 	int m_width;
 	int m_hight;
+
+	// helper functions:
+	void fillHelpTextVec();
+	void fillIconsVec();
 };

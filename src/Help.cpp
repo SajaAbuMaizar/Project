@@ -13,7 +13,10 @@ Help::Help(int width, int hight) :
     fillIconsVec();
 }
 
-//this function shows the info to help the user to play the game
+// this function creates and opens the Help window and prints to it
+// the elements of m_helpText and the elements of m_icons.
+// the window is opened in waitEvent mode, when the user clicks on one of the icons,
+// an Info window is opened to show more info about that icon.
 void Help::showHelp()
 {
     sf::RenderWindow helpWindow(sf::VideoMode(m_width, m_hight), "Help");
@@ -51,7 +54,7 @@ void Help::showHelp()
     }
 }
 
-//this function prints the text that will show to help the user with the game
+// helper function for the c-tor, it creates the elements of m_helpText.
 void Help::fillHelpTextVec()
 {
     m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
@@ -73,8 +76,8 @@ void Help::fillHelpTextVec()
     }
 }
 
-//this function creates the icons of the characters that show on the screen
-//so that every character shows how it operates
+// helper function for the c-tor, it creates the elements of m_icons which is a vector of
+// sf::Sprite elements that represent characters in the game.
 void Help::fillIconsVec()
 {
     m_kingTex.loadFromFile("King.png");
@@ -102,7 +105,8 @@ void Help::fillIconsVec()
     }
 }
 
-//this function handles the clicks on the characters' icons
+// this function handles the clicks on the characters' icons.
+// it desides which character info to send to the showInfo function. 
 void Help::handleIconsClick(const sf::Vector2f& location)
 {
     sf::Text info;
@@ -131,8 +135,8 @@ void Help::handleIconsClick(const sf::Vector2f& location)
     showInfo(info);
 }
 
-//this function shows the specific information and help through
-//the characte's icon that have been pressed
+// this function opens a window (in waitEvent mode) when clicking on a character in Help window,
+// it shows more information about that character.
 void Help::showInfo(const sf::Text info)
 {
     // set background for helpWindow
