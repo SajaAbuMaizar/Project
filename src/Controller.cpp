@@ -2,7 +2,7 @@
 #include "Level.h"
 #include <fstream>
 
-enum CONSTS {BUTTONS = 3, NUM_OF_LEVELS = 3};
+enum CONSTS { BUTTONS = 3, NUM_OF_LEVELS = 3 };
 
 //The constuctor for Controller, takes in the width and height of the window
 //we want to create and creates it
@@ -10,7 +10,8 @@ Controller::Controller(int width, int height)
     : m_width(width),
     m_height(height),
     m_window(sf::VideoMode(width, height), "Save The King"),
-    m_home(width,height)
+    m_home(width, height),
+    m_buttonPressed(3)
 {}
 
 //this function operates the game and runs it
@@ -28,7 +29,7 @@ void Controller::operateGame()
         m_window.draw(backgroundImg);
         for (int counter = 0; counter < BUTTONS; counter++)
         {
-            m_window.draw(m_home.getHomeButtons()[counter]);
+            m_window.draw(m_home.getHomeButtons(m_buttonPressed)[counter]);
         }
         m_window.display();
         if (auto event = sf::Event{}; m_window.pollEvent(event))
@@ -54,6 +55,12 @@ void Controller::operateGame()
                     }
                     break;
                 }
+                break;
+            }
+            case sf::Event::MouseMoved: //if the mouse moved on the window
+            {
+                auto location = m_window.mapPixelToCoords({ event.mouseMove.x , event.mouseMove.y });
+                m_buttonPressed = m_home.handleMouseMovedOnButtons(location);
                 break;
             }
             }
