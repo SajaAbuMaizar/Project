@@ -5,7 +5,7 @@ class GameObject
 {
 public:
 	GameObject(float x, float y) { m_position.x = x; m_position.y = y; };
-	virtual sf::Sprite getImage() = 0;
+	virtual void draw() = 0;
 	virtual ~GameObject() = default;
 
 protected:
@@ -13,3 +13,6 @@ protected:
 	int m_objectSizeFitter = 45;
 
 };
+//we will add sf::sprite as protected member
+//and initialize it in the c-tor of GameOject : m_sprite(m_texture)
+//and the c-tor recieves texture from unique_ptr

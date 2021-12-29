@@ -2,9 +2,23 @@
 #include <iostream>
 #include "Board.h"
 
-//this function reads the level board from the file
-void Board::readLevel(std::ifstream& board_file)
+Board::Board()
 {
+    m_textures.resize(6); //10 = number of characters
+    m_textures[0].loadFromFile("Fire.png");
+    m_textures[1].loadFromFile("Gate.png");
+    m_textures[2].loadFromFile("KingChair.png");
+    m_textures[3].loadFromFile("wall.jpg");
+    m_textures[4].loadFromFile("TeleportCell.png");
+    m_textures[5].loadFromFile("Orc.png");
+}
+
+//this function reads the level board from the file
+void Board::readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock, std::ifstream& board_file)
+{
+    m_levelSize = levelSize;
+    m_timer = timer;
+    m_clock = clock;
     char c;
     std::string line;
 
@@ -91,7 +105,8 @@ void Board::startLevel()
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
-                    window.draw(m_board[j][i]->getImage());
+                    m_board[j][i]->draw(window);
+                   // window.draw(m_board[j][i]->getImage());
                 }
             }
         }        

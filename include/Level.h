@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 #include <ctime>
-
+#include "Board.h"
 #include "GameObject.h"
 
 
@@ -27,4 +27,6 @@ private:
 	// Helper Funvtions:
 	std::string createFileName();
 	void calculateLevelSize(std::ifstream& board_file);
+	Board m_board;
+
 };

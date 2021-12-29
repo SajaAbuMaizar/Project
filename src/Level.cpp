@@ -1,5 +1,5 @@
 #include "Level.h"
-#include "Board.h"
+
 
 enum CONSTS { NUM_0F_LEVELS = 3 };
 Level::Level() :
@@ -35,9 +35,8 @@ void Level::buildLevel()
         getline(board_file, time_str); //ignore a line
     }
     calculateLevelSize(board_file);
-    Board b(m_levelSize, m_timer, m_clock);
-    b.readLevel(board_file);
-    b.startLevel();
+    m_board.readLevel(m_levelSize, m_timer, m_clock,board_file);
+    m_board.startLevel();
 }
 
 //this function creats the file name based of the number of the level we are in
