@@ -7,6 +7,11 @@
 #include <KingChair.h>
 #include <TeleportCell.h>
 #include <Fire.h>
+#include <King.h>
+#include <Mage.h>
+#include <Warrior.h>
+#include <Thief.h>
+#include "MovingObject.h"
 
 inline auto font1 = sf::Font();
 
@@ -25,8 +30,12 @@ private:
 	sf::Vector2u m_levelSize;
 	int m_timer;
 	sf::Clock m_clock;
+	sf::Clock m_moveClock;
+	std::vector <sf::Texture> m_textures;
+	sf::Vector2f kingPos;
+	std::unique_ptr<MovingObject> m_player;
 	// Helper Functions:
 	void readChar(const char c, const size_t i, size_t& j);
-	std::vector <sf::Texture> m_textures;
-
+	void convertClass(int i, int j);
+	void convertClass2(sf::Vector2f pos1);
 };

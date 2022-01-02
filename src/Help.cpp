@@ -1,7 +1,7 @@
 #include "Help.h"
 
-enum CONSTS { NUM_OF_ICONS = 4, CHAR_WIDTH = 30};
-enum Icons {KING, MAGE, WARRIOR, THIEF};
+enum CONSTS { NUM_OF_ICONS = 4, CHAR_SIZE = 30 };
+enum Icons { KING, MAGE, WARRIOR, THIEF };
 
 // the c-tor reseives the dimentions of the Help window 
 // It inializes the elemnts of the vector m_icons and the elements of vector m_helpText
@@ -9,7 +9,9 @@ Help::Help(int width, int hight) :
     m_width(width),
     m_hight(hight)
 {
-    fillHelpTextVec();
+    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_background.loadFromFile("Background.png");
+    m_helpText = fillTextVec("Help");
     fillIconsVec();
 }
 
@@ -20,10 +22,7 @@ Help::Help(int width, int hight) :
 void Help::showHelp()
 {
     sf::RenderWindow helpWindow(sf::VideoMode(m_width, m_hight), "Help");
-
-    // set background for helpWindow
-    m_background.loadFromFile("Background.png");
-    auto backgroundImg = sf::Sprite(m_background);
+    auto backgroundImg = sf::Sprite(m_background);  // set a background image for helpWindow
 
     while (helpWindow.isOpen())
     {
@@ -31,14 +30,12 @@ void Help::showHelp()
         helpWindow.draw(backgroundImg);
         for (int index = 0; index < m_helpText.size(); index++)
             helpWindow.draw(m_helpText[index]);
-        
+
         for (int index = 0; index < m_iconsVec.size(); index++)
             helpWindow.draw(m_iconsVec[index]);
-
         helpWindow.display();
 
         if (auto event = sf::Event{}; helpWindow.waitEvent(event))
-        {
             switch (event.type)
             {
             case sf::Event::Closed:
@@ -50,30 +47,29 @@ void Help::showHelp()
                 handleIconsClick(location);
                 break;
             }
-        }
     }
 }
 
-// helper function for the c-tor, it creates the elements of m_helpText.
-void Help::fillHelpTextVec()
+// helper function, it copies a txt file to a sf::Text vector.
+std::vector <sf::Text> Help::fillTextVec(const std::string fileName)
 {
-    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    std::ifstream data_file;
+    std::string line;
+    std::vector <sf::Text> text_vec;
 
-    m_helpText.push_back(sf::Text("To switch between the character press p.\n", m_font));
-    m_helpText.push_back(sf::Text("To move right press the right arrow.\n", m_font));
-    m_helpText.push_back(sf::Text("To move left press the left arrow.\n", m_font));
-    m_helpText.push_back(sf::Text("To move up press the up arrow.\n", m_font));
-    m_helpText.push_back(sf::Text("To move down press the down arrow.\n", m_font));
-    m_helpText.push_back(sf::Text("Press on a character for more information about it.\n", m_font));
-    m_helpText.push_back(sf::Text("Press the X icon to exit the Help window.\n", m_font));
-
-    
-    for (int index = 0; index < m_helpText.size(); index++)
+    data_file.open(fileName + ".txt");
+    while (!data_file.eof())
     {
-        sf::Vector2f linePos(float(0), float(CHAR_WIDTH * index));
-        m_helpText[index].setPosition(linePos);
-        m_helpText[index].setCharacterSize(20);
+        getline(data_file, line);
+        text_vec.push_back(sf::Text(line, m_font));
     }
+    for (int index = 0; index < text_vec.size(); index++)
+    {
+        sf::Vector2f linePos(float(0), float(CHAR_SIZE * index));
+        text_vec[index].setPosition(linePos);
+        text_vec[index].setCharacterSize(20);
+    }
+    return text_vec;
 }
 
 // helper function for the c-tor, it creates the elements of m_icons which is a vector of
@@ -98,7 +94,7 @@ void Help::fillIconsVec()
 
     for (int counter = 0; counter < m_iconsVec.size(); counter++)
     {
-        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float(CHAR_WIDTH * m_helpText.size())); //CHAR_WIDTH * m_helpText.size() to print the picture under the text
+        sf::Vector2f iconLoc(float((m_width / NUM_OF_ICONS) * counter), float(CHAR_SIZE * m_helpText.size())); //CHAR_WIDTH * m_helpText.size() to print the images under the text
         sf::Vector2f iconScale(0.3f, 0.3f);
         m_iconsVec[counter].setPosition(iconLoc);
         m_iconsVec[counter].scale(iconScale);
@@ -109,56 +105,47 @@ void Help::fillIconsVec()
 // it desides which character info to send to the showInfo function. 
 void Help::handleIconsClick(const sf::Vector2f& location)
 {
-    sf::Text info;
-    info.setFont(m_font);
+    std::string info;
     for (int index = 0; index < NUM_OF_ICONS; index++)
     {
         if (m_iconsVec[index].getGlobalBounds().contains(location))
-        {
             switch (index)
             {
             case KING: // king icon is pressed
-                info.setString("king");
+                info = "King";
                 break;
             case MAGE: // mage icon is pressed
-                info.setString("mage");
+                info = "Mage";
                 break;
             case WARRIOR: // warrior icon is pressed
-                info.setString("warrior");
+                info = "Warrior";
                 break;
             case THIEF: // theif icon is pressed 
-                info.setString("thief");
+                info = "Thief";
                 break;
             }
-        }
     }
     showInfo(info);
 }
 
-// this function opens a window (in waitEvent mode) when clicking on a character in Help window,
-// it shows more information about that character.
-void Help::showInfo(const sf::Text info)
+// this function opens a window (in waitEvent mode) when clicking on a character in Help window.
+// It shows more information about that character.
+void Help::showInfo(const std::string info)
 {
-    // set background for helpWindow
-    auto backgroundImg = sf::Sprite(m_background);
-
-    sf::RenderWindow infoWindow(sf::VideoMode(m_width,m_hight), "More Info");
+    std::vector <sf::Text> info_vec = fillTextVec(info); // read info about the character from a txt file to a vector
+    auto backgroundImg = sf::Sprite(m_background);     // set background for infoWindow
+    sf::RenderWindow infoWindow(sf::VideoMode(m_width, m_hight), info);
 
     while (infoWindow.isOpen())
     {
         infoWindow.clear();
         infoWindow.draw(backgroundImg);
-        infoWindow.draw(info);
+        for (int index = 0; index < info_vec.size(); index++)
+            infoWindow.draw(info_vec[index]);
         infoWindow.display();
 
         if (auto event = sf::Event{}; infoWindow.waitEvent(event))
-        {
-            switch (event.type)
-            {
-            case sf::Event::Closed:
+            if (event.type == sf::Event::Closed)
                 infoWindow.close();
-                break;
-            }
-        }
     }
 }

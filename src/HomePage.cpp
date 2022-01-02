@@ -3,91 +3,67 @@
 
 enum CONSTS { BUTTONS = 3 };
 
-enum Buttons { START_GAME, SHOW_HELP, EXIT_GAME };
+enum Buttons { START_GAME, SHOW_HELP, EXIT_GAME, NONE };
 
 //The c-tor of HomePage sets the width and height of the window of the HomePage
 //and creates the buttons that are shown on the screen
 HomePage::HomePage(int width, int height)
 {
+	// set window dimentions
 	m_dimentions.x = float(width);
 	m_dimentions.y = float(height);
-
-	//vector = 3
+	// load buttons images
 	m_startGame.loadFromFile("Start Button.png");
-	auto startImg = sf::Sprite(m_startGame);
-	m_homeButtons.push_back(startImg);
-
 	m_help.loadFromFile("Help Button.png");
-	auto helpImg = sf::Sprite(m_help);
-	m_homeButtons.push_back(helpImg);
-
 	m_exitGame.loadFromFile("Exit Button.png");
-	auto exitImg = sf::Sprite(m_exitGame);
-	m_homeButtons.push_back(exitImg);
-
-
 	m_startGame2.loadFromFile("Start Button Clicked.png");
-	auto startImg2 = sf::Sprite(m_startGame2);
-
 	m_help2.loadFromFile("Help Button Clicked.png");
-	auto helpImg2 = sf::Sprite(m_help2);
-
 	m_exitGame2.loadFromFile("Exit Button Clicked.png");
+	// sprite images and save them in vectors
+	initializeButtonsVecs();
+	// adjust the images to the window
+	initializeImage();
+}
+void HomePage::initializeButtonsVecs()
+{
+	auto startImg = sf::Sprite(m_startGame);
+	auto startImg2 = sf::Sprite(m_startGame2);
+	auto helpImg = sf::Sprite(m_help);
+	auto helpImg2 = sf::Sprite(m_help2);
+	auto exitImg = sf::Sprite(m_exitGame);
 	auto exitImg2 = sf::Sprite(m_exitGame2);
 
-	//vector = 0
-	m_homeButtons0.push_back(startImg2);
-	m_homeButtons0.push_back(helpImg);
-	m_homeButtons0.push_back(exitImg);
-
-	//vectror = 1
-	m_homeButtons1.push_back(startImg);
-	m_homeButtons1.push_back(helpImg2);
-	m_homeButtons1.push_back(exitImg);
-
-	//vectror = 2
-	m_homeButtons2.push_back(startImg);
-	m_homeButtons2.push_back(helpImg);
-	m_homeButtons2.push_back(exitImg2);
-
-
-	initializeImage();
+	m_homeButtonsVec.resize(4);
+	for (int vec = 0; vec < m_homeButtonsVec.size(); vec++)
+	{
+		if (vec == 1) // vec 1: the buttons when the mouse cursor is on "start" button
+			m_homeButtonsVec[1].push_back(startImg2);
+		else
+			m_homeButtonsVec[vec].push_back(startImg);
+		if (vec == 2) // vec 2: the buttons when the mouse cursor is on "help" button
+			m_homeButtonsVec[2].push_back(helpImg2);
+		else
+			m_homeButtonsVec[vec].push_back(helpImg);
+		if (vec == 3) // vec 3: the buttons when the mouse cursor is on "exit" button
+			m_homeButtonsVec[3].push_back(exitImg2);
+		else
+			m_homeButtonsVec[vec].push_back(exitImg);
+	}
 }
 
 //this function initialize the images of the button
 void HomePage::initializeImage()
 {
-	for (int counter = 0; counter < BUTTONS; counter++)
+	for (int vec = 0; vec < 4; vec++)
 	{
-		sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6) * (counter + 1) + 200)); // +200 to print the buttons under the title "Save The King"
-		sf::Vector2f toolScale(0.7f, 0.7f);
-		m_homeButtons[counter].setOrigin(sf::Vector2f(m_homeButtons[counter].getTexture()->getSize() / 2u));
-		m_homeButtons[counter].setPosition(toolLoc);
-		m_homeButtons[counter].scale(toolScale);
-	}
-	for (int counter = 0; counter < BUTTONS; counter++)
-	{
-		sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6) * (counter + 1) + 200)); // +200 to print the buttons under the title "Save The King"
-		sf::Vector2f toolScale(0.7f, 0.7f);
-		m_homeButtons0[counter].setOrigin(sf::Vector2f(m_homeButtons0[counter].getTexture()->getSize() / 2u));
-		m_homeButtons0[counter].setPosition(toolLoc);
-		m_homeButtons0[counter].scale(toolScale);
-	}
-	for (int counter = 0; counter < BUTTONS; counter++)
-	{
-		sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6) * (counter + 1) + 200)); // +200 to print the buttons under the title "Save The King"
-		sf::Vector2f toolScale(0.7f, 0.7f);
-		m_homeButtons1[counter].setOrigin(sf::Vector2f(m_homeButtons1[counter].getTexture()->getSize() / 2u));
-		m_homeButtons1[counter].setPosition(toolLoc);
-		m_homeButtons1[counter].scale(toolScale);
-	}
-	for (int counter = 0; counter < BUTTONS; counter++)
-	{
-		sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6) * (counter + 1) + 200)); // +200 to print the buttons under the title "Save The King"
-		sf::Vector2f toolScale(0.7f, 0.7f);
-		m_homeButtons2[counter].setOrigin(sf::Vector2f(m_homeButtons2[counter].getTexture()->getSize() / 2u));
-		m_homeButtons2[counter].setPosition(toolLoc);
-		m_homeButtons2[counter].scale(toolScale);
+		for (int counter = 0; counter < BUTTONS; counter++)
+		{
+			sf::Vector2f toolLoc(float(m_dimentions.x / 2), float((m_dimentions.y / 6) * (counter + 1) + 200)); // +200 to print the buttons under the title "Save The King"
+			sf::Vector2f toolScale(0.7f, 0.7f);
+			m_homeButtonsVec[vec][counter].setOrigin(sf::Vector2f(m_homeButtonsVec[vec][counter].getTexture()->getSize() / 2u));
+			m_homeButtonsVec[vec][counter].setPosition(toolLoc);
+			m_homeButtonsVec[vec][counter].scale(toolScale);
+		}
 	}
 
 }
@@ -98,13 +74,13 @@ std::vector <sf::Sprite> HomePage::getHomeButtons(int buttonPressed) const
 	switch (buttonPressed)
 	{
 	case START_GAME://if the user pressed the start button
-		return m_homeButtons0; //
+		return m_homeButtonsVec[1]; //
 	case SHOW_HELP://if the user pressed the help button
-		return m_homeButtons1; //
+		return m_homeButtonsVec[2]; //
 	case EXIT_GAME: //if the user pressed the exit button
-		return m_homeButtons2;
+		return m_homeButtonsVec[3];
 	}
-	return m_homeButtons;
+	return m_homeButtonsVec[0];
 }
 
 // the function builds a Help object 
@@ -114,12 +90,12 @@ void HomePage::ShowHelp()
 	help.showHelp();
 }
 
-//this function handles the click on the buttons of the menu in the HomePage
+//this function handles the clicks on the buttons in the HomePage
 bool HomePage::handleButtonsClick(const sf::Vector2f& location)
 {
 	for (int index = 0; index < BUTTONS; index++)
 	{
-		if (m_homeButtons[index].getGlobalBounds().contains(location))
+		if (m_homeButtonsVec[0][index].getGlobalBounds().contains(location))
 		{
 			switch (index)
 			{
@@ -140,7 +116,7 @@ int HomePage::handleMouseMovedOnButtons(sf::Vector2f location)
 {
 	for (int index = 0; index < BUTTONS; index++)
 	{
-		if (m_homeButtons[index].getGlobalBounds().contains(location))
+		if (m_homeButtonsVec[0][index].getGlobalBounds().contains(location))
 		{
 			switch (index)
 			{
@@ -153,5 +129,5 @@ int HomePage::handleMouseMovedOnButtons(sf::Vector2f location)
 			}
 		}
 	}
-	return 3; //3 = case of not moving on buttons, change to enum
+	return NONE; //case of not moving on buttons
 }

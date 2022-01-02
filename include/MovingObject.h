@@ -4,10 +4,14 @@
 class MovingObject : public GameObject
 {
 public:
-	using GameObject::GameObject;
-	virtual void move() = 0;
-	virtual void speed() = 0;
+	MovingObject(sf::Texture& image, float x, float y) : GameObject(image, x, y), m_firstDraw(true) {};
+	//using GameObject::GameObject;
+	virtual void move(sf::Time deltaTime) = 0;
+	void setDirection(sf::Keyboard::Key key);
+	sf::Vector2f getPosition() const;
 
-private:
+protected:
+	sf::Vector2f m_direction;
+	bool m_firstDraw;
 
 };

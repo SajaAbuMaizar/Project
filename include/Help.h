@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <fstream>
 
 class Help
 {
@@ -8,7 +9,7 @@ public:
 	Help(int width, int hight);
 	void showHelp();
 	void handleIconsClick(const sf::Vector2f& location);
-	void showInfo(const sf::Text info);
+	void showInfo(const std::string info);
 
 private:
 	std::vector<sf::Sprite> m_iconsVec;
@@ -23,6 +24,6 @@ private:
 	int m_hight;
 
 	// helper functions:
-	void fillHelpTextVec();
+	std::vector <sf::Text> fillTextVec(const std::string fileName);
 	void fillIconsVec();
 };

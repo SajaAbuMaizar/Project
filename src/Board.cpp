@@ -54,6 +54,9 @@ void Board::readChar(const char c, const size_t i, size_t& j)
     for (unsigned int index = 0; index < m_levelSize.y; index++)
         m_board[index].resize(m_levelSize.x);
 
+    GameObject* temp;
+    MovingObject* tempMoving;
+
     if (c != '\n') //ignore the break
     {
         switch (c)
@@ -77,34 +80,42 @@ void Board::readChar(const char c, const size_t i, size_t& j)
             m_board[j][i] = std::make_unique<KingChair>(m_textures[2], float(i), float(j));
             break;
         case 'K':
-            m_board[j][i] = std::make_unique<KingChair>(m_textures[6], float(i), float(j));
+            m_board[j][i] = std::make_unique<King>(m_textures[6], float(i), float(j)); //now m_board[j][i] = null / remember to return the object to it
+            kingPos.x = i; kingPos.y = j;
             break;
         case 'M':
-            m_board[j][i] = std::make_unique<KingChair>(m_textures[7], float(i), float(j));
+            m_board[j][i] = std::make_unique<Mage>(m_textures[7], float(i), float(j));
             break;
         case 'W':
-            m_board[j][i] = std::make_unique<KingChair>(m_textures[8], float(i), float(j));
+            m_board[j][i] = std::make_unique<Warrior>(m_textures[8], float(i), float(j));
             break;
         case 'T':
-            m_board[j][i] = std::make_unique<KingChair>(m_textures[9], float(i), float(j));
+            m_board[j][i] = std::make_unique<Thief>(m_textures[9], float(i), float(j));
             break;
         default:
             break;
         }
     }
 }
-/*
-void Board::setObjectPosition(const float i, const float j)
+
+//because the objects are unique_ptr
+//from class GameObject to class MovingObject
+void Board::convertClass(int i, int j)
 {
-    sf::Vector2f ObjLoc(i,j);
-    m_board[i][j]->getImage().setPosition(ObjLoc);
+    GameObject* temp = m_board[j][i].release();
+    MovingObject* tempMoving = dynamic_cast<MovingObject*>(temp);
+    std::unique_ptr<MovingObject> tempUnique(tempMoving);
+    m_player = std::move(tempUnique);
 }
 
-    /*
-std::vector<std::vector<GameObject>> Board::getBoard()
+//from class MovingObject to class GameObject
+void Board::convertClass2(sf::Vector2f pos1)
 {
-    return m_board;
-}*/
+    MovingObject* temp = m_player.release();
+    GameObject* tempObject = dynamic_cast<GameObject*>(temp);
+    std::unique_ptr<GameObject> tempUnique(tempObject);
+    m_board[pos1.x][pos1.y] = std::move(tempUnique);
+}
 
 //this function starts the level, creates the window and prints the level on it
 void Board::startLevel()
@@ -146,6 +157,20 @@ void Board::startLevel()
             {
             case sf::Event::Closed: //if the user closes the window then close the window and exit
                 window.close();
+                break;
+            case sf::Event::KeyPressed:
+                const auto deltaTime = m_moveClock.restart();
+                convertClass(kingPos.x, kingPos.y); // return m_player [class MovingObject]
+                //std::cout << typeid(m_player).name() << std::endl;
+                //std::cout << typeid(*m_player).name() << std::endl;
+                m_player->setDirection(event.key.code);
+                m_player->move(deltaTime);
+                sf::Vector2f pos1 (m_player->getPosition().x / 45, m_player->getPosition().y / 45);
+                convertClass2(pos1); //return m_board[pos1.x][pos1.y] [class GameObject]
+                //std::cout << typeid(m_board[pos1.x][pos1.y]).name() << std::endl;
+                //std::cout << typeid(*m_board[pos1.x][pos1.y]).name() << std::endl;
+                kingPos.x = pos1.x;
+                kingPos.y = pos1.y;
                 break;
             }
         }

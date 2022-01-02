@@ -3,6 +3,7 @@
                                                "HomePage.cpp"
                                                "Level.cpp"
                                                "TimeLimitedLevel.cpp"
+                                               "MovingObject.cpp"
                                                "Board.cpp"
                                                "Help.cpp"
                                                "King.cpp"
