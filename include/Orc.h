@@ -7,15 +7,17 @@ class Orc : public StaticObject
 public:
 	using StaticObject::StaticObject;
 	//this function creates the image of the Orc Object and returns it
-	virtual sf::Sprite getImage() {
-		m_Orc.loadFromFile("Orc.png");
-		m_OrcImg = sf::Sprite(m_Orc);
-		m_OrcImg.scale(0.1f, 0.1f);
-		m_OrcImg.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
-		return m_OrcImg;
+	virtual sf::Sprite initializeImg() {
+		m_image.setScale(0.1f, 0.1f);
+		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
+		return m_image;
 	};
 
+	void draw(sf::RenderWindow& window)
+	{
+		window.draw(initializeImg());
+	}
+
 private:
-	sf::Texture m_Orc;
-	sf::Sprite m_OrcImg;
+
 };

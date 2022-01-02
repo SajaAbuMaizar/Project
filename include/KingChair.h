@@ -7,15 +7,14 @@ class KingChair : public StaticObject
 public:
 	using StaticObject::StaticObject;
 	//this function creates the image of the King Chair Object and returns it
-	virtual sf::Sprite getImage() {
-		m_KingChair.loadFromFile("KingChair.png");
-		m_KingChairImg = sf::Sprite(m_KingChair);
-		m_KingChairImg.scale(0.1f, 0.1f);
-		m_KingChairImg.setPosition(m_KingChairImg.getGlobalBounds().width * m_position.x, m_KingChairImg.getGlobalBounds().height * m_position.y);
-		return m_KingChairImg;
+	virtual sf::Sprite initializeImg() {
+		m_image.setScale(0.1f, 0.1f);
+		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
+		return m_image;
 	};
 
-private:
-	sf::Texture m_KingChair;
-	sf::Sprite m_KingChairImg;
+	void draw(sf::RenderWindow& window)
+	{
+		window.draw(initializeImg());
+	}
 };

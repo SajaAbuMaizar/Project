@@ -1,11 +1,12 @@
 #include "Thief.h"
 
-//This function creates the image of the Thief and initalizez it and returns it
-sf::Sprite Thief::getImage()
+sf::Sprite Thief::initializeImg() {
+	m_image.setScale(0.1f, 0.1f);
+	m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
+	return m_image;
+};
+
+void Thief::draw(sf::RenderWindow& window)
 {
-	m_thief.loadFromFile("Thief.png");
-	m_thiefImg = sf::Sprite(m_thief);
-	m_thiefImg.scale(0.1f, 0.1f);
-	m_thiefImg.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
-	return m_thiefImg;
+	window.draw(initializeImg());
 }

@@ -6,9 +6,10 @@ class Mage : public MovingObject
 {
 public:
 	using MovingObject::MovingObject;
-	virtual sf::Sprite getImage();
+	virtual sf::Sprite initializeImg();
+
+	void draw(sf::RenderWindow& window);
 
 private:
-	sf::Texture m_mage;
-	sf::Sprite m_mageImg;
+
 };

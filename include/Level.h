@@ -27,6 +27,5 @@ private:
 	// Helper Funvtions:
 	std::string createFileName();
 	void calculateLevelSize(std::ifstream& board_file);
-	Board m_board;
 
 };

@@ -4,13 +4,17 @@
 
 Board::Board()
 {
-    m_textures.resize(6); //10 = number of characters
+    m_textures.resize(10); //6 = number of characters
     m_textures[0].loadFromFile("Fire.png");
     m_textures[1].loadFromFile("Gate.png");
     m_textures[2].loadFromFile("KingChair.png");
     m_textures[3].loadFromFile("wall.jpg");
     m_textures[4].loadFromFile("TeleportCell.png");
     m_textures[5].loadFromFile("Orc.png");
+    m_textures[6].loadFromFile("King.png");
+    m_textures[7].loadFromFile("Mage.png");
+    m_textures[8].loadFromFile("Warrior.png");
+    m_textures[9].loadFromFile("Thief.png");
 }
 
 //this function reads the level board from the file
@@ -55,22 +59,34 @@ void Board::readChar(const char c, const size_t i, size_t& j)
         switch (c)
         {
         case '=':
-            m_board[j][i] = std::make_unique<Wall>(float(i), float(j));
+            m_board[j][i] = std::make_unique<Wall>(m_textures[3], float(i), float(j));
             break;
         case '*':
-            m_board[j][i] = std::make_unique<Fire>(float(i), float(j));
+            m_board[j][i] = std::make_unique<Fire>(m_textures[0], float(i), float(j));
             break;
         case '!':
-            m_board[j][i] = std::make_unique<Orc>(float(i), float(j));
+            m_board[j][i] = std::make_unique<Orc>(m_textures[5], float(i), float(j));
             break;
         case '#':
-            m_board[j][i] = std::make_unique<Gate>(float(i), float(j));
+            m_board[j][i] = std::make_unique<Gate>(m_textures[1], float(i), float(j));
             break;
         case 'X':
-            m_board[j][i] = std::make_unique<TeleportCell>(float(i), float(j));
+            m_board[j][i] = std::make_unique<TeleportCell>(m_textures[4], float(i), float(j));
             break;
         case '@':
-            m_board[j][i] = std::make_unique<KingChair>(float(i), float(j));
+            m_board[j][i] = std::make_unique<KingChair>(m_textures[2], float(i), float(j));
+            break;
+        case 'K':
+            m_board[j][i] = std::make_unique<KingChair>(m_textures[6], float(i), float(j));
+            break;
+        case 'M':
+            m_board[j][i] = std::make_unique<KingChair>(m_textures[7], float(i), float(j));
+            break;
+        case 'W':
+            m_board[j][i] = std::make_unique<KingChair>(m_textures[8], float(i), float(j));
+            break;
+        case 'T':
+            m_board[j][i] = std::make_unique<KingChair>(m_textures[9], float(i), float(j));
             break;
         default:
             break;
@@ -105,6 +121,7 @@ void Board::startLevel()
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
+                    //std::cout << typeid(*m_board[j][i]).name() << std::endl;
                     m_board[j][i]->draw(window);
                    // window.draw(m_board[j][i]->getImage());
                 }

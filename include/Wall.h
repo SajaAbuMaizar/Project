@@ -7,16 +7,18 @@ class Wall : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	//this function creates the image of the Wall Object and returns it
-	virtual sf::Sprite getImage() {
-		m_Wall.loadFromFile("wall.jpg");
-		m_wallImg = sf::Sprite(m_Wall);
-		m_wallImg.scale(0.1f,0.1f);
-		m_wallImg.setPosition(m_wallImg.getGlobalBounds().width*m_position.x, m_wallImg.getGlobalBounds().height * m_position.y);
-	    return m_wallImg;
+	//this function creates the image of the Wall Object and returns itImg;
+	virtual sf::Sprite initializeImg() {
+		m_image.setScale(0.1f, 0.1f);
+		m_image.setPosition(m_image.getGlobalBounds().width * m_position.x, m_image.getGlobalBounds().height * m_position.y);
+		return m_image;
 	};
 
+	void draw(sf::RenderWindow& window)
+	{
+		window.draw(initializeImg());
+	}
+
 private:
-	sf::Texture m_Wall;
-	sf::Sprite m_wallImg;
+
 };
