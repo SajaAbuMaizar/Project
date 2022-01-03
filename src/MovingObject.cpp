@@ -19,3 +19,8 @@ sf::Vector2f MovingObject::getPosition() const
 {
 	return m_image.getPosition();
 }
+
+sf::Vector2f MovingObject::getDirection() const
+{
+	return m_direction;
+}

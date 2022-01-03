@@ -22,20 +22,21 @@ public:
 	void readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock,std::ifstream& board_file);
 	void startLevel();
 	//std::vector<std::vector<GameObject>> getBoard();
-	void setObjectPosition(const size_t i, const size_t j);
+	void handleKeyPressed(sf::Keyboard::Key key);
+	char* getNextStep(sf::Keyboard::Key key);
+	
 
 
 private:
 	std::vector<std::vector<std::unique_ptr<GameObject>>> m_board;
+	std::vector<std::unique_ptr<MovingObject>> m_characters;
 	sf::Vector2u m_levelSize;
 	int m_timer;
 	sf::Clock m_clock;
 	sf::Clock m_moveClock;
 	std::vector <sf::Texture> m_textures;
 	sf::Vector2f kingPos;
-	std::unique_ptr<MovingObject> m_player;
+	int m_player;
 	// Helper Functions:
 	void readChar(const char c, const size_t i, size_t& j);
-	void convertClass(int i, int j);
-	void convertClass2(sf::Vector2f pos1);
 };

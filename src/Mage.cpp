@@ -15,7 +15,7 @@ void Mage::draw(sf::RenderWindow& window)
 	window.draw(initializeImg());
 }
 
-void Mage::move(sf::Time deltaTime)
+void Mage::move(sf::Time deltaTime, const char* NextStep)
 {
 	const auto speedPerSecond = 20.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());

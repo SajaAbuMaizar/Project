@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Board.h"
 
-Board::Board()
+Board::Board() : m_player(0), m_timer(0)
 {
     m_textures.resize(10); //6 = number of characters
     m_textures[0].loadFromFile("Fire.png");
@@ -54,8 +54,7 @@ void Board::readChar(const char c, const size_t i, size_t& j)
     for (unsigned int index = 0; index < m_levelSize.y; index++)
         m_board[index].resize(m_levelSize.x);
 
-    GameObject* temp;
-    MovingObject* tempMoving;
+    m_characters.resize(4);
 
     if (c != '\n') //ignore the break
     {
@@ -80,41 +79,21 @@ void Board::readChar(const char c, const size_t i, size_t& j)
             m_board[j][i] = std::make_unique<KingChair>(m_textures[2], float(i), float(j));
             break;
         case 'K':
-            m_board[j][i] = std::make_unique<King>(m_textures[6], float(i), float(j)); //now m_board[j][i] = null / remember to return the object to it
-            kingPos.x = i; kingPos.y = j;
+            m_characters[0] = std::make_unique<King>(m_textures[6], float(i), float(j)); // 0 = king
             break;
         case 'M':
-            m_board[j][i] = std::make_unique<Mage>(m_textures[7], float(i), float(j));
+            m_characters[1] = std::make_unique<Mage>(m_textures[7], float(i), float(j));
             break;
         case 'W':
-            m_board[j][i] = std::make_unique<Warrior>(m_textures[8], float(i), float(j));
+            m_characters[2] = std::make_unique<Warrior>(m_textures[8], float(i), float(j));
             break;
         case 'T':
-            m_board[j][i] = std::make_unique<Thief>(m_textures[9], float(i), float(j));
+            m_characters[3] =  std::make_unique<Thief>(m_textures[9], float(i), float(j));
             break;
         default:
             break;
         }
     }
-}
-
-//because the objects are unique_ptr
-//from class GameObject to class MovingObject
-void Board::convertClass(int i, int j)
-{
-    GameObject* temp = m_board[j][i].release();
-    MovingObject* tempMoving = dynamic_cast<MovingObject*>(temp);
-    std::unique_ptr<MovingObject> tempUnique(tempMoving);
-    m_player = std::move(tempUnique);
-}
-
-//from class MovingObject to class GameObject
-void Board::convertClass2(sf::Vector2f pos1)
-{
-    MovingObject* temp = m_player.release();
-    GameObject* tempObject = dynamic_cast<GameObject*>(temp);
-    std::unique_ptr<GameObject> tempUnique(tempObject);
-    m_board[pos1.x][pos1.y] = std::move(tempUnique);
 }
 
 //this function starts the level, creates the window and prints the level on it
@@ -132,13 +111,15 @@ void Board::startLevel()
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
-                    //std::cout << typeid(*m_board[j][i]).name() << std::endl;
                     m_board[j][i]->draw(window);
-                   // window.draw(m_board[j][i]->getImage());
                 }
             }
         }        
-        
+        for (int index = 0; index < m_characters.size(); index++)
+        {
+            m_characters[index]->draw(window);
+        }
+        /*
         m_clock.getElapsedTime();
         sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
         m_helpText.setCharacterSize(20);
@@ -149,7 +130,7 @@ void Board::startLevel()
         m_time.setPosition(pos);
         //window.draw(m_helpText);
         window.draw(m_time);
-        
+        */
         window.display();
         if (auto event = sf::Event{}; window.pollEvent(event))
         {
@@ -159,20 +140,49 @@ void Board::startLevel()
                 window.close();
                 break;
             case sf::Event::KeyPressed:
-                const auto deltaTime = m_moveClock.restart();
-                convertClass(kingPos.x, kingPos.y); // return m_player [class MovingObject]
-                //std::cout << typeid(m_player).name() << std::endl;
-                //std::cout << typeid(*m_player).name() << std::endl;
-                m_player->setDirection(event.key.code);
-                m_player->move(deltaTime);
-                sf::Vector2f pos1 (m_player->getPosition().x / 45, m_player->getPosition().y / 45);
-                convertClass2(pos1); //return m_board[pos1.x][pos1.y] [class GameObject]
-                //std::cout << typeid(m_board[pos1.x][pos1.y]).name() << std::endl;
-                //std::cout << typeid(*m_board[pos1.x][pos1.y]).name() << std::endl;
-                kingPos.x = pos1.x;
-                kingPos.y = pos1.y;
+                handleKeyPressed(event.key.code);
+
                 break;
             }
         }
     }
 }
+
+void Board::handleKeyPressed(sf::Keyboard::Key key)
+{
+    switch (key)
+    {
+    case sf::Keyboard::Key::P:
+        m_player = (m_player == 3) ? 0 : m_player+1;
+        break;
+    case sf::Keyboard::Key::Up: case sf::Keyboard::Key::Down:
+    case sf::Keyboard::Key::Right: case sf::Keyboard::Key::Left:
+        const auto deltaTime = m_moveClock.restart();
+        m_characters[m_player]->setDirection(key);
+        sf::Vector2f pos = m_characters[m_player]->getPosition();
+        sf::Vector2f dir = m_characters[m_player]->getDirection();
+        sf::Vector2f temp = pos + dir;
+        std::cout << typeid(*m_board[0][0]).name();
+        const char* NextStep = " ";
+       // const char* NextStep = typeid(*m_board[temp.x/45][temp.y/45]).name();
+        //std::cout << NextStep;
+        m_characters[m_player]->move(deltaTime, NextStep);
+        break;
+    }
+}
+/*
+char* Board::getNextStep(sf::Keyboard::Key key)
+{
+    switch (key)
+    {
+    case sf::Keyboard::Key::Up:
+        
+        break;
+    case sf::Keyboard::Key::Down:
+        break;
+    case sf::Keyboard::Key::Right:
+        break;
+    case sf::Keyboard::Key::Left:
+        break;
+    }
+}*/

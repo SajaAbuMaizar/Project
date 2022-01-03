@@ -8,7 +8,7 @@ public:
 	using MovingObject::MovingObject;
 	virtual sf::Sprite initializeImg();
 	void draw(sf::RenderWindow& window);
-	virtual void move(sf::Time deltaTime);
+	virtual void move(sf::Time deltaTime, const char* NextStep);
 
 private:
 
