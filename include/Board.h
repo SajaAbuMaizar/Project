@@ -25,6 +25,7 @@ public:
 	//std::vector<std::vector<GameObject>> getBoard();
 	void handleKeyPressed(sf::Keyboard::Key key);
 	const char* getNextStep(sf::Time deltaTime, sf::Vector2f temp);
+	void handleArrowPressed(sf::Keyboard::Key key);
 	
 
 

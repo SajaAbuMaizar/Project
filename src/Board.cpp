@@ -155,25 +155,29 @@ void Board::handleKeyPressed(sf::Keyboard::Key key)
     case sf::Keyboard::Key::P:
         m_player = (m_player == 3) ? 0 : m_player+1;
         break;
-    case sf::Keyboard::Key::Up: case sf::Keyboard::Key::Down:
-    case sf::Keyboard::Key::Right: case sf::Keyboard::Key::Left:
-        const auto deltaTime = m_moveClock.restart();
-        m_characters[m_player]->setDirection(key);
-        sf::Vector2f pos(m_characters[m_player]->getPosition().x / 45, m_characters[m_player]->getPosition().y / 45);
-        sf::Vector2f dir(m_characters[m_player]->getDirection().x * 0.5 , m_characters[m_player]->getDirection().y * 0.5);
-        sf::Vector2f temp = pos + dir;
-        if (round(temp.x) >= m_levelSize.x || round(temp.y) >= m_levelSize.y || round(temp.x) < 0 || round(temp.y) < 0)
-            return;
-        const char* NextStep = getNextStep(deltaTime, temp);
-        m_characters[m_player]->move(deltaTime, NextStep);
+    case sf::Keyboard::Key::Down: case sf::Keyboard::Key::Up:
+    case sf::Keyboard::Key::Left: case sf::Keyboard::Key::Right:
+        handleArrowPressed(key);
         break;
     }
 }
-
+void Board::handleArrowPressed(sf::Keyboard::Key key)
+{
+    const auto deltaTime = m_moveClock.restart();
+    m_characters[m_player]->setDirection(key);
+    sf::Vector2f pos(m_characters[m_player]->getPosition().x / 45, m_characters[m_player]->getPosition().y / 45);
+    sf::Vector2f dir(m_characters[m_player]->getDirection().x * 0.5, m_characters[m_player]->getDirection().y * 0.5);
+    sf::Vector2f temp = pos + dir;
+    if (round(temp.x) >= m_levelSize.x || round(temp.x) < 0 ||
+        round(temp.y) >= m_levelSize.y || round(temp.y) < 0)
+        return;
+    const char* NextStep = getNextStep(deltaTime, temp);
+    m_characters[m_player]->move(deltaTime, NextStep);
+}
 const char* Board::getNextStep(sf::Time deltaTime, sf::Vector2f temp)
 {
     const char* NextStep = " ";
-        if (m_board[round(temp.y)][round(temp.x)] != nullptr)
-            NextStep = typeid(*m_board[round(temp.y)][round(temp.x)]).name();
-        return NextStep;
+    if (m_board[round(temp.y)][round(temp.x)] != nullptr)
+        NextStep = typeid(*m_board[round(temp.y)][round(temp.x)]).name();
+    return NextStep;
 }

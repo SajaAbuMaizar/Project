@@ -2,6 +2,7 @@
 
 sf::Sprite Warrior::initializeImg() {
 	m_image.setScale(0.1f, 0.1f);
+	m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
 	if (m_firstDraw)
 	{
 		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
@@ -17,8 +18,7 @@ void Warrior::draw(sf::RenderWindow& window)
 
 void Warrior::move(sf::Time deltaTime, const char* NextStep)
 {
-	if (NextStep[6] == 'W' ||
-		NextStep[6] == 'F' || NextStep[6] == 'G')  // 'K' = king chair
+	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'G')  // 'K' = king chair
 	{
 		return;
 	}

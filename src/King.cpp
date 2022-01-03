@@ -3,6 +3,7 @@
 
 sf::Sprite King::initializeImg() {
 	m_image.setScale(0.1f, 0.1f);
+	m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
 	if (m_firstDraw)
 	{
 		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);

@@ -1,7 +1,10 @@
 --------------------------------------- Project - Save The King -----------------------------------------
+---------------------------------------------------------------------------------------------------------
 ------------------------------------------- Students and IDs -------------------------------------------- 
 -------- Samah Rajabi (student number: 211558556) & Saja Abu Maizar (student number: 208072371) ---------
+---------------------------------------------------------------------------------------------------------
 ----------------------------------------  General Description  ------------------------------------------
+---------------------------------------------------------------------------------------------------------
 About the game:
 In the game, the player must bring the king to his throne -chair-.
 The problem is that the king is limited in his abilities and can only move on empty tiles on the board.
@@ -21,3 +24,22 @@ There are four characters that the player has control over:
 The player wins the level when the king reaches his throne.
 ** to be continued:**
 **gifts, enemy, how to change the curr character, how to move**
+---------------------------------------------------------------------------------------------------------
+------------------------------------------------- Design ------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+the main starts the game by creating a Controller object.
+the Controller creates a HomePage object, then in a while loop the controller handles the moves and
+clickes on the window of the HomePage:
+ ● when the user clickes the "help" button in HomePage, the controller creates a Help object that opens
+   a Help window and present info about the characters and how to play the game.
+ ● when the user clickes the "exit" button in HomePage, the controller exits the program.
+ ● when the user clickes the "start" button in HomePage, the controller closes the window of HomePage
+   and creates a Level object.
+In a for loop, the Level object starts new levels (NUM_OF_LEVEL times). For each level, it reads
+a text file to calculate the size of the board and whether or not the level istime-limited.
+Lastly, it creates a Board object that creates the map (board) of the level.
+a Board object reads the map of the level from a text file, saves it in a vector[of vectors]
+and finally prints the map [and more info? timer, levelData]to the window of the level.
+**to be continued: types of GameObjects**
+---------------------------------------------------------------------------------------------------------
+** additional notes: how to add a new level, what to write to the text file of the level. **
