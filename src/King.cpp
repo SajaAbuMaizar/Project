@@ -1,4 +1,5 @@
 #include "King.h"
+#include <iostream>
 
 sf::Sprite King::initializeImg() {
 	m_image.setScale(0.1f, 0.1f);
@@ -17,10 +18,11 @@ void King::draw(sf::RenderWindow& window)
 
 void King::move(sf::Time deltaTime, const char* NextStep)
 {
-	//if (NextStep == "class Wall")
-	//{
-	//	return;
-//	}
+	if (NextStep == "class Wall\n")
+	{
+		std::cout << "in wall\n";
+		return;
+	}
 	const auto speedPerSecond = 20.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }

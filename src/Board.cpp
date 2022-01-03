@@ -159,13 +159,19 @@ void Board::handleKeyPressed(sf::Keyboard::Key key)
     case sf::Keyboard::Key::Right: case sf::Keyboard::Key::Left:
         const auto deltaTime = m_moveClock.restart();
         m_characters[m_player]->setDirection(key);
-        sf::Vector2f pos = m_characters[m_player]->getPosition();
-        sf::Vector2f dir = m_characters[m_player]->getDirection();
+        sf::Vector2f pos(m_characters[m_player]->getPosition().x / 45, m_characters[m_player]->getPosition().y / 45);
+        sf::Vector2f dir(m_characters[m_player]->getDirection().x * deltaTime.asSeconds(), m_characters[m_player]->getDirection().y * deltaTime.asSeconds());
         sf::Vector2f temp = pos + dir;
-        std::cout << typeid(*m_board[0][0]).name();
         const char* NextStep = " ";
-       // const char* NextStep = typeid(*m_board[temp.x/45][temp.y/45]).name();
-        //std::cout << NextStep;
+        if (temp.y > m_levelSize.x && temp.x > m_levelSize.y)
+            return;
+
+        if (m_board[temp.y][temp.x] != nullptr)
+        {
+            NextStep = typeid(*m_board[temp.y][temp.x]).name();
+        }
+        std::cout << temp.x << " " << temp.y << std::endl;
+        std::cout << NextStep << std::endl;
         m_characters[m_player]->move(deltaTime, NextStep);
         break;
     }
