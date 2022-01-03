@@ -18,11 +18,16 @@ void King::draw(sf::RenderWindow& window)
 
 void King::move(sf::Time deltaTime, const char* NextStep)
 {
-	if (NextStep == "class Wall\n")
+	if (NextStep[6] == 'W' || NextStep[6] == 'F' ||
+		NextStep[6] == 'O' || NextStep[6] == 'G')  // 'K' = king chair
 	{
-		std::cout << "in wall\n";
 		return;
 	}
-	const auto speedPerSecond = 20.f;
+	if (deltaTime.asSeconds() > 3.f)
+	{
+		sf::Clock temp;
+		deltaTime = temp.getElapsedTime();
+	}
+	const auto speedPerSecond = 45.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }

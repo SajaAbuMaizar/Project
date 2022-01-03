@@ -1,5 +1,6 @@
 #pragma once
 #include <fstream>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include <Wall.h>
 #include <Gate.h>
@@ -23,7 +24,7 @@ public:
 	void startLevel();
 	//std::vector<std::vector<GameObject>> getBoard();
 	void handleKeyPressed(sf::Keyboard::Key key);
-	char* getNextStep(sf::Keyboard::Key key);
+	const char* getNextStep(sf::Time deltaTime, sf::Vector2f temp);
 	
 
 

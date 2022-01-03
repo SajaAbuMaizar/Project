@@ -160,35 +160,20 @@ void Board::handleKeyPressed(sf::Keyboard::Key key)
         const auto deltaTime = m_moveClock.restart();
         m_characters[m_player]->setDirection(key);
         sf::Vector2f pos(m_characters[m_player]->getPosition().x / 45, m_characters[m_player]->getPosition().y / 45);
-        sf::Vector2f dir(m_characters[m_player]->getDirection().x * deltaTime.asSeconds(), m_characters[m_player]->getDirection().y * deltaTime.asSeconds());
+        sf::Vector2f dir(m_characters[m_player]->getDirection().x * 0.5 , m_characters[m_player]->getDirection().y * 0.5);
         sf::Vector2f temp = pos + dir;
-        const char* NextStep = " ";
-        if (temp.y > m_levelSize.x && temp.x > m_levelSize.y)
+        if (round(temp.x) >= m_levelSize.x || round(temp.y) >= m_levelSize.y || round(temp.x) < 0 || round(temp.y) < 0)
             return;
-
-        if (m_board[temp.y][temp.x] != nullptr)
-        {
-            NextStep = typeid(*m_board[temp.y][temp.x]).name();
-        }
-        std::cout << temp.x << " " << temp.y << std::endl;
-        std::cout << NextStep << std::endl;
+        const char* NextStep = getNextStep(deltaTime, temp);
         m_characters[m_player]->move(deltaTime, NextStep);
         break;
     }
 }
-/*
-char* Board::getNextStep(sf::Keyboard::Key key)
+
+const char* Board::getNextStep(sf::Time deltaTime, sf::Vector2f temp)
 {
-    switch (key)
-    {
-    case sf::Keyboard::Key::Up:
-        
-        break;
-    case sf::Keyboard::Key::Down:
-        break;
-    case sf::Keyboard::Key::Right:
-        break;
-    case sf::Keyboard::Key::Left:
-        break;
-    }
-}*/
+    const char* NextStep = " ";
+        if (m_board[round(temp.y)][round(temp.x)] != nullptr)
+            NextStep = typeid(*m_board[round(temp.y)][round(temp.x)]).name();
+        return NextStep;
+}

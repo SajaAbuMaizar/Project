@@ -17,6 +17,16 @@ void Warrior::draw(sf::RenderWindow& window)
 
 void Warrior::move(sf::Time deltaTime, const char* NextStep)
 {
-	const auto speedPerSecond = 20.f;
+	if (NextStep[6] == 'W' ||
+		NextStep[6] == 'F' || NextStep[6] == 'G')  // 'K' = king chair
+	{
+		return;
+	}
+	if (deltaTime.asSeconds() > 3.f)
+	{
+		sf::Clock temp;
+		deltaTime = temp.getElapsedTime();
+	}
+	const auto speedPerSecond = 45.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }
