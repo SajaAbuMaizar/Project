@@ -11,7 +11,7 @@ void BoardController::startLevel()
         if (m_success)
             window.close();
 
-        std::cout << m_enemies.size() << std::endl;
+        //std::cout << m_enemies.size() << std::endl;
        // for (int index = 0 ; index < m_enemies.size(); index++)
      //   {
      //       MoveEnemy(index);

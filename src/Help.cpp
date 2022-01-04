@@ -9,7 +9,7 @@ Help::Help(int width, int hight) :
     m_width(width),
     m_hight(hight)
 {
-    m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_font.loadFromFile("C:/Windows/Fonts/CASTELAR.ttf");
     m_background.loadFromFile("Background.png");
     m_helpText = fillTextVec("Help");
     fillIconsVec();
@@ -67,7 +67,9 @@ std::vector <sf::Text> Help::fillTextVec(const std::string fileName)
     {
         sf::Vector2f linePos(float(0), float(CHAR_SIZE * index));
         text_vec[index].setPosition(linePos);
-        text_vec[index].setCharacterSize(20);
+        text_vec[index].setCharacterSize(25);
+        text_vec[index].setOutlineColor(sf::Color::Black);
+        text_vec[index].setOutlineThickness(1.f);
     }
     return text_vec;
 }

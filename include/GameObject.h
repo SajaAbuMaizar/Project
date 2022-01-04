@@ -15,6 +15,3 @@ protected:
 	int m_objectSizeFitter = 45;
 
 };
-//we will add sf::sprite as protected member
-//and initialize it in the c-tor of GameOject : m_sprite(m_texture)
-//and the c-tor recieves texture from unique_ptr

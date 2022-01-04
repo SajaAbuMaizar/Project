@@ -3,5 +3,5 @@ To move right press the right arrow.
 To move left press the left arrow.
 To move up press the up arrow.
 To move down press the down arrow.
-Press on a character for more information about it.
+Press on a character bellow for more information about it.
 Press the X icon to exit the Help window.

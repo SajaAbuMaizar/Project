@@ -15,7 +15,7 @@ Controller::Controller(int width, int height)
 {}
 
 //this function operates the game and runs it
-//it shows the home paje to the game and the menu on the home page
+//it shows the home page to the game and the menu on the home page
 void Controller::operateGame()
 {
     //set background
