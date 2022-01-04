@@ -5,12 +5,17 @@ void BoardController::startLevel()
 {
     sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 100), "Save The King Level ");//do the enum / 45 = wall height/width / 100 = for the info
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    m_enemyClock.resize(m_enemies.size());
     while (window.isOpen())
     {
         if (m_success)
-        {
             window.close();
-        }
+
+        std::cout << m_enemies.size() << std::endl;
+       // for (int index = 0 ; index < m_enemies.size(); index++)
+     //   {
+     //       MoveEnemy(index);
+     //   }
         window.clear();
         for (size_t j = 0; j < m_levelSize.y; j++)
         {
@@ -29,7 +34,8 @@ void BoardController::startLevel()
         }
         for (int index = 0; index < m_enemies.size(); index++)
         {
-            m_enemies[index]->draw(window);
+            MoveEnemy(index);
+            //m_enemies[index]->draw(window);
         }
         /*
         m_clock.getElapsedTime();
@@ -73,6 +79,30 @@ void BoardController::handleKeyPressed(sf::Keyboard::Key key)
         break;
     }
 }
+
+void BoardController::MoveEnemy(int enemyIndex)
+{
+    static int currDir = 72;
+    const auto deltaTime = m_enemyClock[enemyIndex].restart();
+    
+    sf::Vector2f pos(m_enemies[enemyIndex]->getPosition().x / 45, m_enemies[enemyIndex]->getPosition().y / 45);
+    sf::Vector2f dir(m_enemies[enemyIndex]->getDirection().x * 0.3, m_enemies[enemyIndex]->getDirection().y * 0.3);
+    sf::Vector2f temp = pos + dir;
+    if (round(temp.x) >= m_levelSize.x || round(temp.x) < 0 ||
+        round(temp.y) >= m_levelSize.y || round(temp.y) < 0)
+        return;
+    const char* NextStep = getNextStep(deltaTime, temp);
+    if (NextStep[0] != ' ')
+    {
+        if (currDir == 72)
+            currDir = 71;
+        else
+            currDir = 72;
+    }
+    m_enemies[enemyIndex]->setDirection(currDir);
+    int moveStatus = m_enemies[enemyIndex]->move(deltaTime, NextStep);
+}
+
 void BoardController::handleArrowPressed(sf::Keyboard::Key key)
 {
     const auto deltaTime = m_moveClock.restart();

@@ -21,7 +21,7 @@ int King::move(sf::Time deltaTime, const char* NextStep)
 {
 	int moveStatus = 0;
 	if (NextStep[6] == 'W' || NextStep[6] == 'F' ||
-		NextStep[6] == 'O' || NextStep[6] == 'G')  // 'K' = king chair
+		NextStep[6] == 'O' || NextStep[6] == 'G' || NextStep[6] == 'E')  // 'K' = king chair
 		return -1;
 	if (NextStep[6] == 'C')
 		moveStatus = 5;

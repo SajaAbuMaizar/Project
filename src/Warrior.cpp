@@ -20,7 +20,8 @@ void Warrior::draw(sf::RenderWindow& window)
 int Warrior::move(sf::Time deltaTime, const char* NextStep)
 {
 	int moveStatus = 0;
-	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'G')  // 'K' = king chair
+	if (NextStep[6] == 'W' || NextStep[6] == 'F' ||
+		NextStep[6] == 'G' || NextStep[6] == 'E')  // 'K' = king chair
 		return -1;
 	if (NextStep[6] == 'O')
 		moveStatus = 2; // 2 = moved on orc and put key instead

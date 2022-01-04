@@ -19,7 +19,8 @@ void Thief::draw(sf::RenderWindow& window)
 int Thief::move(sf::Time deltaTime, const char* NextStep)
 {
 	int moveStatus = 0;
-	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'O' || (NextStep[6] == 'G' && !m_hasKey))  // 'K' = king chair
+	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'O' ||
+		NextStep[6] == 'E'  || (NextStep[6] == 'G' && !m_hasKey))  // 'K' = king chair
 		return -1;
 	if (NextStep[6] == 'K')
 	{

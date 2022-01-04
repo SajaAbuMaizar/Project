@@ -94,7 +94,8 @@ void Board::readChar(const char c, const size_t i, size_t& j)
             m_characters[3] =  std::make_unique<Thief>(m_textures[9], float(i), float(j));
             break;
         case '^':
-            m_enemies.push_back(std::make_unique<Thief>(m_textures[11], float(i), float(j)));
+            m_board[j][i] = std::make_unique<Enemy>(m_textures[11], float(i), float(j));
+            m_enemies.emplace_back(dynamic_cast<Enemy*> (m_board[j][i].get()));
             break;
         default:
             break;

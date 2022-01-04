@@ -10,5 +10,6 @@
                                                "King.cpp"
                                                "Mage.cpp"
                                                "Warrior.cpp"
-                                               "Thief.cpp")
+                                               "Thief.cpp"
+                                               "Enemy.cpp")
 

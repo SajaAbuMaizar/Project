@@ -14,6 +14,7 @@
 #include <Thief.h>
 #include <Key.h>
 #include "MovingObject.h"
+#include "Enemy.h"
 
 inline auto font1 = sf::Font();
 
@@ -27,7 +28,7 @@ public:
 protected:
 	std::vector<std::vector<std::unique_ptr<GameObject>>> m_board;
 	std::vector<std::unique_ptr<MovingObject>> m_characters;
-	std::vector<std::unique_ptr<MovingObject>> m_enemies;
+	std::vector<Enemy*> m_enemies;
 	std::vector<std::unique_ptr<TeleportCell>> m_TeleportCells;
 	sf::Vector2u m_levelSize;
 	int m_timer;

@@ -6,9 +6,11 @@ class Enemy : public MovingObject
 {
 public:
 	using MovingObject::MovingObject;
-	virtual sf::Sprite& initializeImg();
+	sf::Sprite& initializeImg();
 	void draw(sf::RenderWindow& window);
-	virtual int move(sf::Time deltaTime, const char* NextStep);
+	int move(sf::Time deltaTime, const char* NextStep);
+	void setDirection(int key);
+	~Enemy() = default;
 
 private:
 

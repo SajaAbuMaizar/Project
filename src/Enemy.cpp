@@ -29,3 +29,14 @@ int Enemy::move(sf::Time deltaTime, const char* NextStep)
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 	return moveStatus;
 }
+
+void Enemy::setDirection(int key)
+{
+	switch (key)
+	{
+	case 72:
+		m_direction = sf::Vector2f(1, 0); break;
+	case 71:
+		m_direction = sf::Vector2f(-1, 0); break;
+	}
+}
