@@ -1,8 +1,8 @@
 #include "Thief.h"
 
-sf::Sprite Thief::initializeImg() {
+sf::Sprite& Thief::initializeImg() {
 	m_image.setScale(0.1f, 0.1f);
-	m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
+	//m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
 	if (m_firstDraw)
 	{
 		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
@@ -16,12 +16,23 @@ void Thief::draw(sf::RenderWindow& window)
 	window.draw(initializeImg());
 }
 
-void Thief::move(sf::Time deltaTime, const char* NextStep)
+int Thief::move(sf::Time deltaTime, const char* NextStep)
 {
-	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'O')  // 'K' = king chair
+	int moveStatus = 0;
+	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'O' || (NextStep[6] == 'G' && !m_hasKey))  // 'K' = king chair
+		return -1;
+	if (NextStep[6] == 'K')
 	{
-		return;
+		moveStatus = 3;
+		m_hasKey = true;
 	}
+	if (NextStep[6] == 'G' && m_hasKey)
+	{
+		m_hasKey = false;
+		moveStatus = 4;// 4 = opened the gate
+	}
+	if (NextStep[6] == 'T')
+		moveStatus = 6;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;
@@ -29,4 +40,5 @@ void Thief::move(sf::Time deltaTime, const char* NextStep)
 	}
 	const auto speedPerSecond = 45.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
+	return moveStatus;
 }

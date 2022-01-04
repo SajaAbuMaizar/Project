@@ -1,8 +1,8 @@
 #include "Mage.h"
 
-sf::Sprite Mage::initializeImg() {
+sf::Sprite& Mage::initializeImg() {
 	m_image.setScale(0.1f, 0.1f);
-	m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
+	//m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
 	if (m_firstDraw)
 	{
 		m_image.setPosition(m_objectSizeFitter * m_position.x, m_objectSizeFitter * m_position.y);
@@ -16,12 +16,13 @@ void Mage::draw(sf::RenderWindow& window)
 	window.draw(initializeImg());
 }
 
-void Mage::move(sf::Time deltaTime, const char* NextStep)
+int Mage::move(sf::Time deltaTime, const char* NextStep)
 {
+	int moveStatus = 0;
 	if (NextStep[6] == 'W' || NextStep[6] == 'O' || NextStep[6] == 'G')  // 'K' = king chair
-	{
-		return;
-	}
+		return -1;
+	if (NextStep[6] == 'F')
+		moveStatus = 1; //1 = move on fire
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;
@@ -29,4 +30,5 @@ void Mage::move(sf::Time deltaTime, const char* NextStep)
 	}
 	const auto speedPerSecond = 45.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
+	return moveStatus;
 }

@@ -6,9 +6,9 @@ class Warrior : public MovingObject
 {
 public:
 	using MovingObject::MovingObject;
-	virtual sf::Sprite initializeImg();
+	virtual sf::Sprite& initializeImg();
 	void draw(sf::RenderWindow& window);
-	virtual void move(sf::Time deltaTime, const char* NextStep);
+	virtual int move(sf::Time deltaTime, const char* NextStep);
 
 private:
 

@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "StaticObject.h"
 
-class Gate : public StaticObject
+class Key : public StaticObject
 {
 public:
 	using StaticObject::StaticObject;
-	//this function creates the image of the Gate Object and returns it
+	//this function creates the image of the Fire Object and returns it
 	virtual sf::Sprite& initializeImg() {
 		m_image.setScale(0.1f, 0.1f);
 		//m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));

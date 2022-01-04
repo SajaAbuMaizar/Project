@@ -2,9 +2,9 @@
 #include <iostream>
 #include "Board.h"
 
-Board::Board() : m_player(0), m_timer(0)
+Board::Board() : m_player(0), m_timer(0), m_thiefHasKey(false), m_success(false)
 {
-    m_textures.resize(10); //6 = number of characters
+    m_textures.resize(11); //6 = number of characters
     m_textures[0].loadFromFile("Fire.png");
     m_textures[1].loadFromFile("Gate.png");
     m_textures[2].loadFromFile("KingChair.png");
@@ -15,6 +15,7 @@ Board::Board() : m_player(0), m_timer(0)
     m_textures[7].loadFromFile("Mage.png");
     m_textures[8].loadFromFile("Warrior.png");
     m_textures[9].loadFromFile("Thief.png");
+    m_textures[10].loadFromFile("Key.png");
 }
 
 //this function reads the level board from the file
@@ -74,9 +75,10 @@ void Board::readChar(const char c, const size_t i, size_t& j)
             break;
         case 'X':
             m_board[j][i] = std::make_unique<TeleportCell>(m_textures[4], float(i), float(j));
+            m_TeleportCells.emplace_back(std::make_unique<TeleportCell>(m_textures[4], float(i), float(j)));
             break;
         case '@':
-            m_board[j][i] = std::make_unique<KingChair>(m_textures[2], float(i), float(j));
+            m_board[j][i] = std::make_unique<Chair>(m_textures[2], float(i), float(j));
             break;
         case 'K':
             m_characters[0] = std::make_unique<King>(m_textures[6], float(i), float(j)); // 0 = king
@@ -103,6 +105,10 @@ void Board::startLevel()
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
     while (window.isOpen())
     {
+        if (m_success)
+        {
+            window.close();
+        }
         window.clear();
         for (size_t j = 0; j < m_levelSize.y; j++)
         {
@@ -166,18 +172,62 @@ void Board::handleArrowPressed(sf::Keyboard::Key key)
     const auto deltaTime = m_moveClock.restart();
     m_characters[m_player]->setDirection(key);
     sf::Vector2f pos(m_characters[m_player]->getPosition().x / 45, m_characters[m_player]->getPosition().y / 45);
-    sf::Vector2f dir(m_characters[m_player]->getDirection().x * 0.5, m_characters[m_player]->getDirection().y * 0.5);
+    sf::Vector2f dir(m_characters[m_player]->getDirection().x * 0.3, m_characters[m_player]->getDirection().y * 0.3);
     sf::Vector2f temp = pos + dir;
     if (round(temp.x) >= m_levelSize.x || round(temp.x) < 0 ||
         round(temp.y) >= m_levelSize.y || round(temp.y) < 0)
         return;
     const char* NextStep = getNextStep(deltaTime, temp);
-    m_characters[m_player]->move(deltaTime, NextStep);
+    int moveStatus = m_characters[m_player]->move(deltaTime, NextStep);
+    switch (moveStatus)
+    {
+    case 1:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        break;
+    case 2:
+        m_board[round(temp.y)][round(temp.x)] = std::make_unique<Key>(m_textures[10], float(round(temp.x)), float(round(temp.y)));
+        break;
+    case 3:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        m_thiefHasKey = true;
+        break;
+    case 4:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        m_thiefHasKey = false;
+        break;
+    case 5:
+        m_success = true;
+        break;
+    case 6:
+        for (int index = 0; index < m_TeleportCells.size() ; index++)
+        {
+            sf::Vector2f Ttemp(round(temp.x) * 45, round(temp.y) * 45);
+            if (m_TeleportCells[index]->initializeImg().getPosition() == Ttemp)
+            {
+                if (index % 2 == 0)
+                {
+                    sf::Vector2f characterPos(m_TeleportCells[index + 1]->initializeImg().getPosition().x - 10,
+                        m_TeleportCells[index + 1]->initializeImg().getPosition().y - 10);
+                    m_characters[m_player]->initializeImg().setPosition(characterPos);
+                }
+                else
+                {
+                    sf::Vector2f characterPos(m_TeleportCells[index - 1]->initializeImg().getPosition().x - 10,
+                        m_TeleportCells[index - 1]->initializeImg().getPosition().y - 10);
+                    m_characters[m_player]->initializeImg().setPosition(characterPos);
+                }
+            }
+        }
+        break;
+    }
 }
 const char* Board::getNextStep(sf::Time deltaTime, sf::Vector2f temp)
 {
     const char* NextStep = " ";
     if (m_board[round(temp.y)][round(temp.x)] != nullptr)
+    {
         NextStep = typeid(*m_board[round(temp.y)][round(temp.x)]).name();
+    }
+        
     return NextStep;
 }
