@@ -22,18 +22,12 @@ class Board
 public:
 	Board();
 	void readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock,std::ifstream& board_file);
-	void startLevel();
-	//std::vector<std::vector<GameObject>> getBoard();
-	void handleKeyPressed(sf::Keyboard::Key key);
-	const char* getNextStep(sf::Time deltaTime, sf::Vector2f temp);
-	void handleArrowPressed(sf::Keyboard::Key key);
-	
-
 
 //private:
 protected:
 	std::vector<std::vector<std::unique_ptr<GameObject>>> m_board;
 	std::vector<std::unique_ptr<MovingObject>> m_characters;
+	std::vector<std::unique_ptr<MovingObject>> m_enemies;
 	std::vector<std::unique_ptr<TeleportCell>> m_TeleportCells;
 	sf::Vector2u m_levelSize;
 	int m_timer;

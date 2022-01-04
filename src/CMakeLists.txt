@@ -4,6 +4,7 @@
                                                "Level.cpp"
                                                "TimeLimitedLevel.cpp"
                                                "MovingObject.cpp"
+                                               "BoardController.cpp"
                                                "Board.cpp"
                                                "Help.cpp"
                                                "King.cpp"

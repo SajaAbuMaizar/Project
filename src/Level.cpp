@@ -12,7 +12,7 @@ Level::Level() :
 //it reads if the level is timelimited or not and then builds the level accordingly
 void Level::buildLevel()
 {
-    Board board;
+    BoardController boardController;
     std::ifstream board_file;
     createFileName();
     board_file.open(m_fileName);
@@ -36,8 +36,9 @@ void Level::buildLevel()
         getline(board_file, time_str); //ignore a line
     }
     calculateLevelSize(board_file);
-    board.readLevel(m_levelSize, m_timer, m_clock,board_file);
-    board.startLevel();
+    Board* board = &boardController;
+    board->readLevel(m_levelSize, m_timer, m_clock,board_file);
+    boardController.startLevel();
 }
 
 //this function creats the file name based of the number of the level we are in

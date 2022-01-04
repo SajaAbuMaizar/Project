@@ -6,6 +6,7 @@
 #include <sstream>
 #include <ctime>
 #include "Board.h"
+#include "BoardController.h"
 #include "GameObject.h"
 
 
