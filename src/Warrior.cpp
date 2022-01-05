@@ -19,16 +19,16 @@ void Warrior::draw(sf::RenderWindow& window)
 
 int Warrior::move(sf::Time deltaTime, const char* NextStep)
 {
-	int moveStatus = 0;
+	int moveStatus = S_CLEAR; // initial move statuse:  clear way
 	if (NextStep[6] == 'W' || NextStep[6] == 'F' ||
 		NextStep[6] == 'G' || NextStep[6] == 'E')  // 'K' = king chair
-		return -1;
+		return S_BLOCKED; // update move status: blocked way
 	if (NextStep[6] == 'O')
-		moveStatus = 2; // 2 = moved on orc and put key instead
+		moveStatus = S_ORC; // 2 = moved on orc and put key instead
 	if (NextStep[6] == 'T')
-		moveStatus = 6;
+		moveStatus = S_TELE;
 	if (NextStep[6] == 'e')
-		moveStatus = 7;
+		moveStatus = S_KILL_PRESENT;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

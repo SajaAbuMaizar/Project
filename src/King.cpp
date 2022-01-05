@@ -1,7 +1,8 @@
 #include "King.h"
 #include <iostream>
 
-sf::Sprite& King::initializeImg() {
+sf::Sprite& King::initializeImg()
+{
 	m_image.setScale(0.1f, 0.1f);
 	//m_image.setOrigin(sf::Vector2f(m_image.getTexture()->getSize() / 2u));
 	if (m_firstDraw)
@@ -19,16 +20,16 @@ void King::draw(sf::RenderWindow& window)
 
 int King::move(sf::Time deltaTime, const char* NextStep)
 {
-	int moveStatus = 0;
+	int moveStatus = S_CLEAR; // initial move status: clear way 
 	if (NextStep[6] == 'W' || NextStep[6] == 'F' ||
 		NextStep[6] == 'O' || NextStep[6] == 'G' || NextStep[6] == 'E')  // 'K' = king chair
-		return -1;
+		return S_BLOCKED; // update move status: blocked way
 	if (NextStep[6] == 'C')
-		moveStatus = 5;
+		moveStatus = S_CHAIR;
 	if (NextStep[6] == 'T')
-		moveStatus = 6;
+		moveStatus = S_TELE;
 	if (NextStep[6] == 'e')
-		moveStatus = 7;
+		moveStatus = S_KILL_PRESENT;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

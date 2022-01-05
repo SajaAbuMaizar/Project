@@ -1,6 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
+enum MOVE_STATUS
+{
+	S_BLOCKED = -1, S_CLEAR, S_FIRE, S_ORC, S_KEY, S_GATE, S_CHAIR, S_TELE, S_KILL_PRESENT
+};
+
 class MovingObject : public GameObject
 {
 public:

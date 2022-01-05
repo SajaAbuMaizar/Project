@@ -125,24 +125,24 @@ void BoardController::handleArrowPressed(sf::Keyboard::Key key)
     int moveStatus = m_characters[m_player]->move(deltaTime, NextStep);
     switch (moveStatus)
     {
-    case 1:
+    case S_FIRE:
         m_board[round(temp.y)][round(temp.x)] = nullptr;
         break;
-    case 2:
+    case S_ORC:
         m_board[round(temp.y)][round(temp.x)] = std::make_unique<Key>(m_textures[10], float(round(temp.x)), float(round(temp.y)));
         break;
-    case 3:
+    case S_KEY:
         m_board[round(temp.y)][round(temp.x)] = nullptr;
         m_thiefHasKey = true;
         break;
-    case 4:
+    case S_GATE:
         m_board[round(temp.y)][round(temp.x)] = nullptr;
         m_thiefHasKey = false;
         break;
-    case 5:
+    case S_CHAIR:
         m_success = true;
         break;
-    case 6:
+    case S_TELE:
         for (int index = 0; index < m_TeleportCells.size(); index++)
         {
             sf::Vector2f Ttemp(round(temp.x) * 45, round(temp.y) * 45);
@@ -155,7 +155,7 @@ void BoardController::handleArrowPressed(sf::Keyboard::Key key)
             }
         }
         break;
-    case 7:
+    case S_KILL_PRESENT:
         m_board[round(temp.y)][round(temp.x)] = nullptr;
         m_enemies.clear();
         break;

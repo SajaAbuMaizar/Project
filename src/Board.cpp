@@ -41,7 +41,7 @@ void Board::readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock, std::i
     //start reading the level
     for (size_t j = 0; j < m_levelSize.y; j++)
     {
-        for (size_t i = 0; i < m_levelSize.x + 1; i++)
+        for (size_t i = 0; i <= m_levelSize.x ; i++)
         {
             c = char(board_file.get());
             if (c == 10 || c == -1) // 10 =\n , -1 = eof
@@ -65,47 +65,47 @@ void Board::readChar(const char c, const size_t i, size_t& j)
     {
         switch (c)
         {
-        case '=':
+        case WALL:
             m_board[j][i] = std::make_unique<Wall>(m_textures[3], float(i), float(j));
             break;
-        case '*':
+        case FIRE:
             m_board[j][i] = std::make_unique<Fire>(m_textures[0], float(i), float(j));
             break;
-        case '!':
+        case ORC:
             m_board[j][i] = std::make_unique<Orc>(m_textures[5], float(i), float(j));
             break;
-        case '#':
+        case GATE:
             m_board[j][i] = std::make_unique<Gate>(m_textures[1], float(i), float(j));
             break;
-        case 'X':
+        case TELEPORT_CELL:
             m_board[j][i] = std::make_unique<TeleportCell>(m_textures[4], float(i), float(j));
             m_TeleportCells.emplace_back(std::make_unique<TeleportCell>(m_textures[4], float(i), float(j)));
             break;
-        case '@':
+        case CHAIR:
             m_board[j][i] = std::make_unique<Chair>(m_textures[2], float(i), float(j));
             break;
-        case '+':
+        case UP_PRESENT:
             m_board[j][i] = std::make_unique<IncreaseTimePresent>(m_textures[12], float(i), float(j));
             break;
-        case '-':
+        case DOWN_PRESENT:
             m_board[j][i] = std::make_unique<DecreaseTimePresent>(m_textures[13], float(i), float(j));
             break;
-        case '~':
+        case KILL_PRESENT:
             m_board[j][i] = std::make_unique<executeEnemyPresent>(m_textures[14], float(i), float(j));
             break;
-        case 'K':
+        case KING:
             m_characters[0] = std::make_unique<King>(m_textures[6], float(i), float(j)); // 0 = king
             break;
-        case 'M':
+        case MAGE:
             m_characters[1] = std::make_unique<Mage>(m_textures[7], float(i), float(j));
             break;
-        case 'W':
+        case WARRIOR:
             m_characters[2] = std::make_unique<Warrior>(m_textures[8], float(i), float(j));
             break;
-        case 'T':
+        case THIEF:
             m_characters[3] =  std::make_unique<Thief>(m_textures[9], float(i), float(j));
             break;
-        case '^':
+        case GOAST:
             m_board[j][i] = std::make_unique<Enemy>(m_textures[11], float(i), float(j));
             m_enemies.emplace_back(dynamic_cast<Enemy*> (m_board[j][i].get()));
             break;

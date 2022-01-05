@@ -22,6 +22,14 @@
 
 inline auto font1 = sf::Font();
 
+
+enum CHARS
+{
+	GATE = '#', WALL = '=', GOAST = '^', TELEPORT_CELL = 'X', FIRE = '*', ORC = '!', CHAIR = '@',
+	KING = 'K', MAGE = 'M', THIEF = 'T', WARRIOR = 'W',
+	UP_PRESENT = '+', DOWN_PRESENT = '-', KILL_PRESENT = '~'
+};
+
 class Board
 {
 public:

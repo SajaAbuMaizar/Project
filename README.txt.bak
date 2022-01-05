@@ -58,8 +58,8 @@ access to the Board's potected members.
 The base characters class is called GameObject, it has two children: MovingObject and StaticObject.
 The c-tor of the GameObject class recieves a texture and turns it into a sprite protected member, it also
 recieves the initial position of an object.
-Classes of moving objects, i.g King and Enemy, inherate from the MovingObject class and use its functions
-while still objects, i.g Wall and Gate, inherate from the StaticObject class (which is a virtual class).
+Classes of moving objects, i.e King and Enemy, inherate from the MovingObject class and use its functions
+and members while still objects inherate from the StaticObject class (which is a virtual class).
 The classes of moving objects controles the movment of the object according to the character's abilites.
 ---------------------------------------------------------------------------------------------------------
 ** additional notes: how to add a new level, what to write to the text file of the level. **

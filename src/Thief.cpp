@@ -18,24 +18,24 @@ void Thief::draw(sf::RenderWindow& window)
 
 int Thief::move(sf::Time deltaTime, const char* NextStep)
 {
-	int moveStatus = 0;
+	int moveStatus = S_CLEAR; // initialize move status: clear
 	if (NextStep[6] == 'W' || NextStep[6] == 'F' || NextStep[6] == 'O' ||
 		NextStep[6] == 'E'  || (NextStep[6] == 'G' && !m_hasKey))  // 'K' = king chair
-		return -1;
+		return S_BLOCKED; // update move status: blocked
 	if (NextStep[6] == 'K')
 	{
-		moveStatus = 3;
+		moveStatus = S_KEY;
 		m_hasKey = true;
 	}
 	if (NextStep[6] == 'G' && m_hasKey)
 	{
 		m_hasKey = false;
-		moveStatus = 4;// 4 = opened the gate
+		moveStatus = S_GATE;// 4 = opened the gate
 	}
 	if (NextStep[6] == 'T')
-		moveStatus = 6;
+		moveStatus = S_TELE;
 	if (NextStep[6] == 'e')
-		moveStatus = 7;
+		moveStatus = S_KILL_PRESENT;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

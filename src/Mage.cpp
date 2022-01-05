@@ -18,14 +18,14 @@ void Mage::draw(sf::RenderWindow& window)
 
 int Mage::move(sf::Time deltaTime, const char* NextStep)
 {
-	int moveStatus = 0;
+	int moveStatus = S_CLEAR; // move status: clear
 	if (NextStep[6] == 'W' || NextStep[6] == 'O' ||
 		NextStep[6] == 'G' || NextStep[6] == 'E')  // 'K' = king chair
-		return -1;
+		return S_BLOCKED; // move status: blocked
 	if (NextStep[6] == 'F')
-		moveStatus = 1; //1 = move on fire
+		moveStatus = S_FIRE; //1 = move on fire
 	if (NextStep[6] == 'e')
-		moveStatus = 7;
+		moveStatus = S_KILL_PRESENT;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;
