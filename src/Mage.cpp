@@ -29,7 +29,7 @@ int Mage::move(sf::Time deltaTime, const char* NextStep)
 		sf::Clock temp;
 		deltaTime = temp.getElapsedTime();
 	}
-	const auto speedPerSecond = 45.f;
-	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
+	const auto speedPerSecond = 30.f;
+	m_image.move(m_direction * speedPerSecond);
 	return moveStatus;
 }

@@ -20,12 +20,7 @@ void Enemy::draw(sf::RenderWindow& window)
 int Enemy::move(sf::Time deltaTime, const char* NextStep)
 {
 	int moveStatus = 0;
-	if (deltaTime.asSeconds() > 3.f)
-	{
-		sf::Clock temp;
-		deltaTime = temp.getElapsedTime();
-	}
-	const auto speedPerSecond = 45.f;
+	const auto speedPerSecond = 30.f;
 	m_image.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 	return moveStatus;
 }

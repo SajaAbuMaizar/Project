@@ -24,7 +24,10 @@ void BoardController::startLevel()
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
                 {
-                    m_board[j][i]->draw(window);
+                    if (typeid(*m_board[j][i]).name()[6] != 'E')
+                    {
+                        m_board[j][i]->draw(window);
+                    }
                 }
             }
         }
@@ -35,7 +38,7 @@ void BoardController::startLevel()
         for (int index = 0; index < m_enemies.size(); index++)
         {
             MoveEnemy(index);
-            //m_enemies[index]->draw(window);
+            m_enemies[index]->draw(window);
         }
         /*
         m_clock.getElapsedTime();
@@ -84,14 +87,15 @@ void BoardController::MoveEnemy(int enemyIndex)
 {
     static int currDir = 72;
     const auto deltaTime = m_enemyClock[enemyIndex].restart();
-    
+    m_enemies[enemyIndex]->setDirection(currDir);
     sf::Vector2f pos(m_enemies[enemyIndex]->getPosition().x / 45, m_enemies[enemyIndex]->getPosition().y / 45);
-    sf::Vector2f dir(m_enemies[enemyIndex]->getDirection().x * 0.3, m_enemies[enemyIndex]->getDirection().y * 0.3);
+    sf::Vector2f dir(m_enemies[enemyIndex]->getDirection().x, m_enemies[enemyIndex]->getDirection().y);
     sf::Vector2f temp = pos + dir;
     if (round(temp.x) >= m_levelSize.x || round(temp.x) < 0 ||
         round(temp.y) >= m_levelSize.y || round(temp.y) < 0)
         return;
     const char* NextStep = getNextStep(deltaTime, temp);
+    //std::cout << NextStep << std::endl;
     if (NextStep[0] != ' ')
     {
         if (currDir == 72)
@@ -99,8 +103,17 @@ void BoardController::MoveEnemy(int enemyIndex)
         else
             currDir = 72;
     }
-    m_enemies[enemyIndex]->setDirection(currDir);
+    //std::cout << temp.x << " " << temp.y << std::endl;
+    //std::cout << round(m_enemies[enemyIndex]->getPosition().x) / 45 << std::endl;
+    //std::cout << round(m_enemies[enemyIndex]->getPosition().x) / 45 << " " << m_enemies[enemyIndex]->initializeImg().getPosition().y << std::endl;
     int moveStatus = m_enemies[enemyIndex]->move(deltaTime, NextStep);
+    
+    //sf::Vector2f temp2 = pos + (dir * 0.5f);
+    if (NextStep[0] == ' ')
+    {
+        m_board[round(temp.y)][round(temp.x)] = std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
+        //m_board[round(m_enemies[enemyIndex]->getPosition().y) / 45][round(m_enemies[enemyIndex]->getPosition().x) / 45] = std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
+    }
 }
 
 void BoardController::handleArrowPressed(sf::Keyboard::Key key)
@@ -140,18 +153,10 @@ void BoardController::handleArrowPressed(sf::Keyboard::Key key)
             sf::Vector2f Ttemp(round(temp.x) * 45, round(temp.y) * 45);
             if (m_TeleportCells[index]->initializeImg().getPosition() == Ttemp)
             {
-                if (index % 2 == 0)
-                {
-                    sf::Vector2f characterPos(m_TeleportCells[index + 1]->initializeImg().getPosition().x - 10,
-                        m_TeleportCells[index + 1]->initializeImg().getPosition().y - 10);
-                    m_characters[m_player]->initializeImg().setPosition(characterPos);
-                }
-                else
-                {
-                    sf::Vector2f characterPos(m_TeleportCells[index - 1]->initializeImg().getPosition().x - 10,
-                        m_TeleportCells[index - 1]->initializeImg().getPosition().y - 10);
-                    m_characters[m_player]->initializeImg().setPosition(characterPos);
-                }
+                int SecondTeleportIndex = (index % 2 == 0) ? index + 1 : index - 1 ;
+                sf::Vector2f characterPos(m_TeleportCells[SecondTeleportIndex]->initializeImg().getPosition().x - 10,
+                    m_TeleportCells[SecondTeleportIndex]->initializeImg().getPosition().y - 10);
+                m_characters[m_player]->initializeImg().setPosition(characterPos);
             }
         }
         break;
@@ -161,8 +166,13 @@ const char* BoardController::getNextStep(sf::Time deltaTime, sf::Vector2f temp)
 {
     const char* NextStep = " ";
     if (m_board[round(temp.y)][round(temp.x)] != nullptr)
-    {
         NextStep = typeid(*m_board[round(temp.y)][round(temp.x)]).name();
+    for (int index = 0 ; index < m_enemies.size(); index++)
+    {
+        sf::Vector2f temp2 = m_enemies[index]->getPosition() / 45.0f;
+            if (temp2.x - 0.5f <= temp.x && temp.x <= temp2.x + 0.5f &&
+                temp2.y - 0.5f <= temp.y && temp.y <= temp2.y + 0.5f)
+            NextStep = "class Enemy";
     }
 
     return NextStep;
