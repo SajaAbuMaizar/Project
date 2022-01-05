@@ -17,6 +17,7 @@ public:
 	Level();
 	void buildLevel();
 	void levelOperator();
+	int getLevelNumber() const { return m_level; };
 
 private:
 	int m_level;
