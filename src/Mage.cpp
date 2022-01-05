@@ -24,6 +24,8 @@ int Mage::move(sf::Time deltaTime, const char* NextStep)
 		return -1;
 	if (NextStep[6] == 'F')
 		moveStatus = 1; //1 = move on fire
+	if (NextStep[6] == 'e')
+		moveStatus = 7;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

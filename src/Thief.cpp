@@ -34,6 +34,8 @@ int Thief::move(sf::Time deltaTime, const char* NextStep)
 	}
 	if (NextStep[6] == 'T')
 		moveStatus = 6;
+	if (NextStep[6] == 'e')
+		moveStatus = 7;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

@@ -15,6 +15,10 @@
 #include <Key.h>
 #include "MovingObject.h"
 #include "Enemy.h"
+#include "Present.h"
+#include "IncreaseTimePresent.h"
+#include "DecreaseTimePresent.h"
+#include "executeEnemyPresent.h"
 
 inline auto font1 = sf::Font();
 

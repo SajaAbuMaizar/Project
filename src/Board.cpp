@@ -4,7 +4,7 @@
 
 Board::Board() : m_player(0), m_timer(0), m_thiefHasKey(false), m_success(false)
 {
-    m_textures.resize(12); //6 = number of characters
+    m_textures.resize(15); //6 = number of characters
     m_textures[0].loadFromFile("Fire.png");
     m_textures[1].loadFromFile("Gate.png");
     m_textures[2].loadFromFile("KingChair.png");
@@ -17,6 +17,9 @@ Board::Board() : m_player(0), m_timer(0), m_thiefHasKey(false), m_success(false)
     m_textures[9].loadFromFile("Thief.png");
     m_textures[10].loadFromFile("Key.png");
     m_textures[11].loadFromFile("Enemy.png");
+    m_textures[12].loadFromFile("UpPresent.png");
+    m_textures[13].loadFromFile("downPresent.png");
+    m_textures[14].loadFromFile("killPresent.png");
 }
 
 //this function reads the level board from the file
@@ -80,6 +83,15 @@ void Board::readChar(const char c, const size_t i, size_t& j)
             break;
         case '@':
             m_board[j][i] = std::make_unique<Chair>(m_textures[2], float(i), float(j));
+            break;
+        case '+':
+            m_board[j][i] = std::make_unique<IncreaseTimePresent>(m_textures[12], float(i), float(j));
+            break;
+        case '-':
+            m_board[j][i] = std::make_unique<DecreaseTimePresent>(m_textures[13], float(i), float(j));
+            break;
+        case '~':
+            m_board[j][i] = std::make_unique<executeEnemyPresent>(m_textures[14], float(i), float(j));
             break;
         case 'K':
             m_characters[0] = std::make_unique<King>(m_textures[6], float(i), float(j)); // 0 = king

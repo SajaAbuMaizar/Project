@@ -85,9 +85,8 @@ void BoardController::handleKeyPressed(sf::Keyboard::Key key)
 
 void BoardController::MoveEnemy(int enemyIndex)
 {
-    static int currDir = 72;
     const auto deltaTime = m_enemyClock[enemyIndex].restart();
-    m_enemies[enemyIndex]->setDirection(currDir);
+    m_enemies[enemyIndex]->setDirection(m_enemies[enemyIndex]->getCurrDir());
     sf::Vector2f pos(m_enemies[enemyIndex]->getPosition().x / 45, m_enemies[enemyIndex]->getPosition().y / 45);
     sf::Vector2f dir(m_enemies[enemyIndex]->getDirection().x, m_enemies[enemyIndex]->getDirection().y);
     sf::Vector2f temp = pos + dir;
@@ -98,21 +97,17 @@ void BoardController::MoveEnemy(int enemyIndex)
     //std::cout << NextStep << std::endl;
     if (NextStep[0] != ' ')
     {
-        if (currDir == 72)
-            currDir = 71;
+        if (m_enemies[enemyIndex]->getCurrDir() == 72)
+            m_enemies[enemyIndex]->setCurrDir(71);
         else
-            currDir = 72;
+            m_enemies[enemyIndex]->setCurrDir(72);
     }
-    //std::cout << temp.x << " " << temp.y << std::endl;
-    //std::cout << round(m_enemies[enemyIndex]->getPosition().x) / 45 << std::endl;
-    //std::cout << round(m_enemies[enemyIndex]->getPosition().x) / 45 << " " << m_enemies[enemyIndex]->initializeImg().getPosition().y << std::endl;
     int moveStatus = m_enemies[enemyIndex]->move(deltaTime, NextStep);
     
-    //sf::Vector2f temp2 = pos + (dir * 0.5f);
     if (NextStep[0] == ' ')
     {
-        m_board[round(temp.y)][round(temp.x)] = std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
-        //m_board[round(m_enemies[enemyIndex]->getPosition().y) / 45][round(m_enemies[enemyIndex]->getPosition().x) / 45] = std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
+        m_board[round(temp.y)][round(temp.x)] =
+            std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
     }
 }
 
@@ -159,6 +154,10 @@ void BoardController::handleArrowPressed(sf::Keyboard::Key key)
                 m_characters[m_player]->initializeImg().setPosition(characterPos);
             }
         }
+        break;
+    case 7:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        m_enemies.clear();
         break;
     }
 }
