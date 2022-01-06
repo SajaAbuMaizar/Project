@@ -1,11 +1,12 @@
 #pragma once
 #include "Board.h"
+#include "levelData.h"
 
 class BoardController : public Board
 {
 public:
 	using Board::Board;
-	void startLevel();
+	void startLevel(int levelNum);
 	void handleKeyPressed(sf::Keyboard::Key key);
 	const char* getNextStep(sf::Time deltaTime, sf::Vector2f temp);
 	void MoveEnemy(int enemyIndex);

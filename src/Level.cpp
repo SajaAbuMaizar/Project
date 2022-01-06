@@ -38,7 +38,7 @@ void Level::buildLevel()
     calculateLevelSize(board_file);
     Board* board = &boardController;
     board->readLevel(m_levelSize, m_timer, m_clock,board_file);
-    boardController.startLevel();
+    boardController.startLevel(m_level);
 }
 
 //this function creats the file name based of the number of the level we are in

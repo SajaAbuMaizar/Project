@@ -1,10 +1,11 @@
 #include "BoardController.h"
 
 //this function starts the level, creates the window and prints the level on it
-void BoardController::startLevel()
+void BoardController::startLevel(int LevelNum)
 {
-    sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 100), "Save The King Level ");//do the enum / 45 = wall height/width / 100 = for the info
+    sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 150), "Save The King Level ");//do the enum / 45 = wall height/width / 150 = for the info
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+    LevelData levelData(LevelNum,m_levelSize);
     m_enemyClock.resize(m_enemies.size());
     while (window.isOpen())
     {
@@ -40,6 +41,8 @@ void BoardController::startLevel()
             MoveEnemy(index);
             m_enemies[index]->draw(window);
         }
+        levelData.initializeData(m_player,m_thiefHasKey);
+        levelData.draw(window);
         /*
         m_clock.getElapsedTime();
         sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
