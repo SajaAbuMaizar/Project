@@ -4,6 +4,7 @@
 
 Board::Board() : m_player(0), m_timer(0), m_thiefHasKey(false), m_success(false)
 {
+    m_clock.restart();
     m_textures.resize(15); //6 = number of characters
     m_textures[0].loadFromFile("Fire.png");
     m_textures[1].loadFromFile("Gate.png");

@@ -11,12 +11,6 @@ void BoardController::startLevel(int LevelNum)
     {
         if (m_success)
             window.close();
-
-        //std::cout << m_enemies.size() << std::endl;
-       // for (int index = 0 ; index < m_enemies.size(); index++)
-     //   {
-     //       MoveEnemy(index);
-     //   }
         window.clear();
         for (size_t j = 0; j < m_levelSize.y; j++)
         {
@@ -41,20 +35,12 @@ void BoardController::startLevel(int LevelNum)
             MoveEnemy(index);
             m_enemies[index]->draw(window);
         }
-        levelData.initializeData(m_player,m_thiefHasKey);
-        levelData.draw(window);
-        /*
+        
         m_clock.getElapsedTime();
-        sf::Text m_helpText = sf::Text(sf::String(std::to_string(m_clock.getElapsedTime().asSeconds())), font1);
-        m_helpText.setCharacterSize(20);
-        int time2 = int(m_timer - m_clock.getElapsedTime().asSeconds());
-        sf::Text m_time = sf::Text(sf::String(std::to_string(time2)), font1);
-        m_time.setCharacterSize(20);
-        sf::Vector2f pos(17.0f,(m_levelSize.y +1) * 45); // 45 = hight of icon, change this later
-        m_time.setPosition(pos);
-        //window.draw(m_helpText);
-        window.draw(m_time);
-        */
+        int timeLeft = int(m_timer - m_clock.getElapsedTime().asSeconds());
+
+        levelData.initializeData(m_player, m_thiefHasKey,timeLeft);
+        levelData.draw(window, m_clock);
         window.display();
         if (auto event = sf::Event{}; window.pollEvent(event))
         {

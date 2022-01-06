@@ -3,36 +3,48 @@
 LevelData::LevelData(int level, sf::Vector2u levelSize) : m_levelNum(level),
                                                           m_levelSize(levelSize),
 	                                                      m_player(0),
-	                                                      m_thiefHasKey(false)
+	                                                      m_thiefHasKey(false),
+	                                                      m_timeLeft(0)
 {
 	m_font.loadFromFile("C:/Windows/Fonts/CASTELAR.ttf");
 }
 
-void LevelData::initializeData(int player, bool key)
+void LevelData::initializeData(int player, bool key, int timeLeft)
 {
 	m_player = player;
 	m_thiefHasKey = key;
+	m_timeLeft = timeLeft;
 }
 
 
-void LevelData::draw(sf::RenderWindow& window)
+void LevelData::draw(sf::RenderWindow& window, sf::Clock clock)
 {
-	updateLevelData();
+	updateLevelData(clock);
 	setDataDesign();
 	for (int index = 0; index < m_data.size(); index++)
 		window.draw(m_data[index]);
 	m_data.clear();
 }
 
-void LevelData::updateLevelData()
+void LevelData::updateLevelData(sf::Clock clock)
 {
+
 	NameOfCharacter(); // update the name of the current character
 	m_keyData = ((m_thiefHasKey) ? "Yes" : "No");
-	m_data.push_back(sf::Text("Level : ", m_font));
-	m_data.push_back(sf::Text("Character Playing  : ", m_font));
-	m_data.push_back(sf::Text("The Time Now : ", m_font));
-	m_data.push_back(sf::Text("Time Left : ", m_font));
-	m_data.push_back(sf::Text("Does The Thief Has Key? ", m_font));
+	std::string levelString = "Level: " + std::to_string(m_levelNum);
+	m_data.push_back(sf::Text(levelString, m_font));
+
+	std::string playerString = "Character Playing  : " + m_currCharacter;
+	m_data.push_back(sf::Text(playerString, m_font));
+
+	std::string clockString = "The Time Now : " + std::to_string(clock.getElapsedTime().asSeconds());
+	m_data.push_back(sf::Text(clockString, m_font));
+
+	std::string timerString = "Time Left: " + std::to_string(m_timeLeft);
+	m_data.push_back(sf::Text(timerString, m_font));
+
+	std::string keyString = "Does The Thief Has Key? " + m_keyData;
+	m_data.push_back(sf::Text(keyString, m_font));
 }
 
 void LevelData::setDataDesign()

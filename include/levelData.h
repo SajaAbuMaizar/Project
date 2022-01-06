@@ -6,9 +6,9 @@ class LevelData
 {
 public:
 	LevelData(int, sf::Vector2u);
-	void draw(sf::RenderWindow& window);
-	void initializeData(int player, bool key);
-	void updateLevelData();
+	void draw(sf::RenderWindow& window, sf::Clock);
+	void initializeData(int player, bool key,int timeLeft);
+	void updateLevelData(sf::Clock);
 	void setDataDesign();
 	void NameOfCharacter();
 	
@@ -22,4 +22,5 @@ private:
 	std::string m_keyData;
 	sf::Vector2u m_levelSize;
 	std::string m_currCharacter;
+	int m_timeLeft;
 };

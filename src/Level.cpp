@@ -13,6 +13,7 @@ Level::Level() :
 void Level::buildLevel()
 {
     BoardController boardController;
+    m_timer = 0;
     std::ifstream board_file;
     createFileName();
     board_file.open(m_fileName);
