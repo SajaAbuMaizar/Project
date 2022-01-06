@@ -26,6 +26,7 @@ private:
 	sf::Text m_time;
 	std::string m_fileName;
 	sf::Vector2u m_levelSize;
+	bool m_timeLimitedLevel;
 	// Helper Funvtions:
 	std::string createFileName();
 	void calculateLevelSize(std::ifstream& board_file);

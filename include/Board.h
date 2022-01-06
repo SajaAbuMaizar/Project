@@ -34,7 +34,7 @@ class Board
 {
 public:
 	Board();
-	void readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock,std::ifstream& board_file);
+	void readLevel(sf::Vector2u levelSize, int timer,std::ifstream& board_file);
 
 //private:
 protected:

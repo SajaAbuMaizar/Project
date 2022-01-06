@@ -24,11 +24,10 @@ Board::Board() : m_player(0), m_timer(0), m_thiefHasKey(false), m_success(false)
 }
 
 //this function reads the level board from the file
-void Board::readLevel(sf::Vector2u levelSize, int timer, sf::Clock clock, std::ifstream& board_file)
+void Board::readLevel(sf::Vector2u levelSize, int timer, std::ifstream& board_file)
 {
     m_levelSize = levelSize;
     m_timer = timer;
-    m_clock = clock;
     char c;
     std::string line;
 

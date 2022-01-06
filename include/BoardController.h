@@ -6,7 +6,7 @@ class BoardController : public Board
 {
 public:
 	using Board::Board;
-	void startLevel(int levelNum);
+	bool startLevel(int levelNum, bool timeLimitedLevel);
 	void handleKeyPressed(sf::Keyboard::Key key);
 	const char* getNextStep(sf::Time deltaTime, sf::Vector2f temp);
 	void MoveEnemy(int enemyIndex);
@@ -14,4 +14,5 @@ public:
 
 private:
 	std::vector<sf::Clock> m_enemyClock;
+	int m_TimeLeft;
 };

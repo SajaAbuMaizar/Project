@@ -1,7 +1,7 @@
 #include "BoardController.h"
 
 //this function starts the level, creates the window and prints the level on it
-void BoardController::startLevel(int LevelNum)
+bool BoardController::startLevel(int LevelNum, bool timeLimitedLevel)
 {
     sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 150), "Save The King Level ");//do the enum / 45 = wall height/width / 150 = for the info
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
@@ -13,23 +13,15 @@ void BoardController::startLevel(int LevelNum)
             window.close();
         window.clear();
         for (size_t j = 0; j < m_levelSize.y; j++)
-        {
             for (size_t i = 0; i < m_levelSize.x; i++)
-            {
                 //ignore nullptr elements and print other elements to the window
                 if (m_board[j][i] != nullptr)
-                {
                     if (typeid(*m_board[j][i]).name()[6] != 'E')
-                    {
                         m_board[j][i]->draw(window);
-                    }
-                }
-            }
-        }
+
         for (int index = 0; index < m_characters.size(); index++)
-        {
             m_characters[index]->draw(window);
-        }
+
         for (int index = 0; index < m_enemies.size(); index++)
         {
             MoveEnemy(index);
@@ -37,11 +29,15 @@ void BoardController::startLevel(int LevelNum)
         }
         
         m_clock.getElapsedTime();
-        int timeLeft = int(m_timer - m_clock.getElapsedTime().asSeconds());
-
-        levelData.initializeData(m_player, m_thiefHasKey,timeLeft);
+        m_TimeLeft = int(m_timer - m_clock.getElapsedTime().asSeconds());
+        levelData.initializeData(m_player, m_thiefHasKey, m_TimeLeft, timeLimitedLevel);
         levelData.draw(window, m_clock);
         window.display();
+        if (timeLimitedLevel && m_TimeLeft == 0)
+        {
+            //make a window that tells you to reply
+            return m_success;
+        }
         if (auto event = sf::Event{}; window.pollEvent(event))
         {
             switch (event.type)
@@ -94,10 +90,8 @@ void BoardController::MoveEnemy(int enemyIndex)
     int moveStatus = m_enemies[enemyIndex]->move(deltaTime, NextStep);
     
     if (NextStep[0] == ' ')
-    {
         m_board[round(temp.y)][round(temp.x)] =
             std::move(m_board[round(m_enemies[enemyIndex]->getIndex().y)][round(m_enemies[enemyIndex]->getIndex().x)]);
-    }
 }
 
 void BoardController::handleArrowPressed(sf::Keyboard::Key key)
@@ -147,6 +141,14 @@ void BoardController::handleArrowPressed(sf::Keyboard::Key key)
     case S_KILL_PRESENT:
         m_board[round(temp.y)][round(temp.x)] = nullptr;
         m_enemies.clear();
+        break;
+    case 8:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        m_timer += 5;
+        break;
+    case 9:
+        m_board[round(temp.y)][round(temp.x)] = nullptr;
+        m_timer -= 5;
         break;
     }
 }

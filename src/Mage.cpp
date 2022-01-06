@@ -26,6 +26,10 @@ int Mage::move(sf::Time deltaTime, const char* NextStep)
 		moveStatus = S_FIRE; //1 = move on fire
 	if (NextStep[6] == 'e')
 		moveStatus = S_KILL_PRESENT;
+	if (NextStep[6] == 'I')
+		moveStatus = 8;
+	if (NextStep[6] == 'D')
+		moveStatus = 9;
 	if (deltaTime.asSeconds() > 3.f)
 	{
 		sf::Clock temp;

@@ -4,16 +4,18 @@ LevelData::LevelData(int level, sf::Vector2u levelSize) : m_levelNum(level),
                                                           m_levelSize(levelSize),
 	                                                      m_player(0),
 	                                                      m_thiefHasKey(false),
-	                                                      m_timeLeft(0)
+	                                                      m_timeLeft(0),
+	                                                      m_timeLimitedLevel(false)
 {
 	m_font.loadFromFile("C:/Windows/Fonts/CASTELAR.ttf");
 }
 
-void LevelData::initializeData(int player, bool key, int timeLeft)
+void LevelData::initializeData(int player, bool key, int timeLeft, bool timeLimitedLevel)
 {
 	m_player = player;
 	m_thiefHasKey = key;
 	m_timeLeft = timeLeft;
+	m_timeLimitedLevel = timeLimitedLevel;
 }
 
 
@@ -37,14 +39,17 @@ void LevelData::updateLevelData(sf::Clock clock)
 	std::string playerString = "Character Playing  : " + m_currCharacter;
 	m_data.push_back(sf::Text(playerString, m_font));
 
+	std::string keyString = "Does The Thief Has Key? " + m_keyData;
+	m_data.push_back(sf::Text(keyString, m_font));
+
 	std::string clockString = "The Time Now : " + std::to_string(clock.getElapsedTime().asSeconds());
 	m_data.push_back(sf::Text(clockString, m_font));
 
-	std::string timerString = "Time Left: " + std::to_string(m_timeLeft);
-	m_data.push_back(sf::Text(timerString, m_font));
-
-	std::string keyString = "Does The Thief Has Key? " + m_keyData;
-	m_data.push_back(sf::Text(keyString, m_font));
+	if (m_timeLimitedLevel)
+	{
+		std::string timerString = "Time Left: " + std::to_string(m_timeLeft);
+		m_data.push_back(sf::Text(timerString, m_font));
+	}
 }
 
 void LevelData::setDataDesign()

@@ -5,7 +5,8 @@ enum CONSTS { NUM_0F_LEVELS = 3 };
 Level::Level() :
     m_level(1),
     m_timer(0),
-    m_levelSize(0,0)
+    m_levelSize(0,0),
+    m_timeLimitedLevel(false)
 {}
 
 //This function builds the level
@@ -26,6 +27,7 @@ void Level::buildLevel()
     getline(board_file, time_str); //reading the data that indicates if the level is time limited or not
     if (time_str == "T") // T = time limited level, F = not time limited
     {
+        m_timeLimitedLevel = true;
         getline(board_file, time_str);
         std::stringstream geek(time_str);
         float levelTimer;
@@ -33,13 +35,13 @@ void Level::buildLevel()
         m_timer = levelTimer;
     }
     else //if the level isn't time limited
-    {
         getline(board_file, time_str); //ignore a line
-    }
+
     calculateLevelSize(board_file);
     Board* board = &boardController;
-    board->readLevel(m_levelSize, m_timer, m_clock,board_file);
-    boardController.startLevel(m_level);
+    board->readLevel(m_levelSize, m_timer,board_file);
+    if (!boardController.startLevel(m_level, m_timeLimitedLevel))
+        m_level = m_level - 1; //return to the same level
 }
 
 //this function creats the file name based of the number of the level we are in
