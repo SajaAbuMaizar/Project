@@ -48,6 +48,7 @@ protected:
 	sf::Clock m_moveClock;
 	std::vector <sf::Texture> m_textures;
 	sf::Vector2f kingPos;
+	sf::Texture m_background;
 	int m_player;
 	bool m_thiefHasKey;
 	bool m_success;

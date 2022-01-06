@@ -7,7 +7,7 @@ LevelData::LevelData(int level, sf::Vector2u levelSize) : m_levelNum(level),
 	                                                      m_timeLeft(0),
 	                                                      m_timeLimitedLevel(false)
 {
-	m_font.loadFromFile("C:/Windows/Fonts/CASTELAR.ttf");
+	m_font.loadFromFile("C:/Windows/Fonts/broadw.ttf");
 }
 
 void LevelData::initializeData(int player, bool key, int timeLeft, bool timeLimitedLevel)
@@ -36,13 +36,13 @@ void LevelData::updateLevelData(sf::Clock clock)
 	std::string levelString = "Level: " + std::to_string(m_levelNum);
 	m_data.push_back(sf::Text(levelString, m_font));
 
-	std::string playerString = "Character Playing  : " + m_currCharacter;
+	std::string playerString = "Currently Playing: " + m_currCharacter;
 	m_data.push_back(sf::Text(playerString, m_font));
 
 	std::string keyString = "Does The Thief Has Key? " + m_keyData;
 	m_data.push_back(sf::Text(keyString, m_font));
 
-	std::string clockString = "The Time Now : " + std::to_string(clock.getElapsedTime().asSeconds());
+	std::string clockString = "Time passed: " + std::to_string(int(clock.getElapsedTime().asSeconds()));
 	m_data.push_back(sf::Text(clockString, m_font));
 
 	if (m_timeLimitedLevel)
@@ -59,8 +59,9 @@ void LevelData::setDataDesign()
 		sf::Vector2f linePos(0.0f, (m_levelSize.y * 45) + (index + 1)*20);
 		m_data[index].setPosition(linePos);
 		m_data[index].setCharacterSize(20);
-		m_data[index].setOutlineColor(sf::Color::Black);
-		m_data[index].setOutlineThickness(1.f);
+		//m_data[index].setColor(sf::Color::Transparent);
+		//m_data[index].setOutlineColor(sf::Color::White);
+		//m_data[index].setOutlineThickness(1.f);
 	}
 }
 

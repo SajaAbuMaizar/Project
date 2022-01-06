@@ -3,15 +3,18 @@
 //this function starts the level, creates the window and prints the level on it
 bool BoardController::startLevel(int LevelNum, bool timeLimitedLevel)
 {
-    sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 150), "Save The King Level ");//do the enum / 45 = wall height/width / 150 = for the info
+    std::string titel = "Save The King - Level " + std::to_string(LevelNum);
+    sf::RenderWindow window(sf::VideoMode(m_levelSize.x * 45, m_levelSize.y * 45 + 150), titel);//do the enum / 45 = wall height/width / 150 = for the info
     font1.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-    LevelData levelData(LevelNum,m_levelSize);
+    //auto backgroundImg = sf::Sprite(m_background);
+    LevelData levelData(LevelNum, m_levelSize);
     m_enemyClock.resize(m_enemies.size());
     while (window.isOpen())
     {
         if (m_success)
             window.close();
         window.clear();
+        //window.draw(backgroundImg);
         for (size_t j = 0; j < m_levelSize.y; j++)
             for (size_t i = 0; i < m_levelSize.x; i++)
                 //ignore nullptr elements and print other elements to the window
